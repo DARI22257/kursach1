@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace kursach
+namespace kursachModel
 {
      public class Number
     {

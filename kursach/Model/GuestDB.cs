@@ -11,9 +11,9 @@ namespace kursach
 {
     class GuestDB
     {
-        DbConnection connection;
+        DBConnection connection;
 
-        private GuestDB(DbConnection db)
+        private GuestDB(DBConnection db)
         {
             this.connection = db;
         }
@@ -66,7 +66,7 @@ namespace kursach
 
             if (connection.OpenConnection())
             {
-                var command = connection.CreateCommand("select `id`, `Name`, `Surname`,`Lastname`,`Phone`,`Email`,`Passport data`   ");
+                var command = connection.CreateCommand("select `id`, `Name`, `Surname`,`Lastname`,`Phone`,`Email`,`Passport data` from Guest ");
                 try
                 {
                     MySqlDataReader dr = command.ExecuteReader();
@@ -152,7 +152,7 @@ namespace kursach
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"delete from `Firstname` Surname` Lastname` Phone` Email` Passpotdata` = {remove.ID}");
+                var mc = connection.CreateCommand($"delete from `Firstname` Surname` Lastname` Phone` Email` Passpotdata` = {remove.Id}");
                 try
                 {
                     mc.ExecuteNonQuery();
@@ -171,7 +171,7 @@ namespace kursach
         public static GuestDB GetDb()
         {
             if (db == null)
-                db = new GuestDB(DbConnection.GetDbConnection());
+                db = new GuestDB(DBConnection.GetDbConnection());
             return db;
         }
     }

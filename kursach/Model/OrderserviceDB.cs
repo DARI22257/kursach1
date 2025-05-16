@@ -1,23 +1,23 @@
-﻿using MySqlConnector;
+﻿using kursach.Model;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace kursach.Model
+namespace kursach
 {
-    internal class ServicesDB
+    class OrderserviceDB
     {
         DBConnection connection;
-        private ServicesDB(DBConnection db)
+        private OrderserviceDB(DBConnection db)
         {
             this.connection = db;
         }
 
-        public bool Insert(kursachModel.Services services)
+        public bool Insert(Orderservice orderservice)
         {
             bool result = false;
             if (connection == null)
@@ -25,10 +25,9 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                MySqlCommand cmd = connection.CreateCommand("insert into `Services` Values (0,@Title,@Price);select LAST_INSERT_ID();");
+                MySqlCommand cmd = connection.CreateCommand("insert into `Orderservice` Values (0,@Data);select LAST_INSERT_ID();");
 
-                cmd.Parameters.Add(new MySqlParameter("Title", services.Title));
-                cmd.Parameters.Add(new MySqlParameter("Price", services.Price));
+                cmd.Parameters.Add(new MySqlParameter("Data", orderservice.Data));
 
                 try
                 {
@@ -38,7 +37,7 @@ namespace kursach.Model
                     {
                         MessageBox.Show(id.ToString());
 
-                        services.Id = id;
+                        orderservice.ID = id;
                         result = true;
                     }
                     else
@@ -55,15 +54,15 @@ namespace kursach.Model
             return result;
         }
 
-        internal List<kursachModel.Services> SelectAll()
+        internal List<Orderservice> SelectAll()
         {
-            List<kursachModel.Services> services = new List<kursachModel.Services>();
+            List<Orderservice> orderservice = new List<Orderservice>();
             if (connection == null)
-                return services;
+                return orderservice;
 
             if (connection.OpenConnection())
             {
-                var command = connection.CreateCommand("select `ID`, `Title`, `Price` from Services");
+                var command = connection.CreateCommand("select `ID`, `Data` from Orderservice");
                 try
                 {
 
@@ -72,19 +71,16 @@ namespace kursach.Model
                     while (dr.Read())
                     {
                         int id = dr.GetInt32(0);
-                        int price = 0;
-                        string title = string.Empty;
-                        
-                        if (!dr.IsDBNull(1))
-                            price = dr.GetInt16("Price");
-                        if (!dr.IsDBNull(2))
-                            title = dr.GetString("Title");
+                        DateTime data = DateTime.Now;
 
-                        services.Add(new kursachModel.Services
+                        if (!dr.IsDBNull(1))
+                            data = dr.GetDateTime("Data");
+
+
+                        orderservice.Add(new Orderservice
                         {
-                            Id = id,
-                            Title = title,
-                            Price = price,
+                            ID = id,
+                            Data = data,
                         });
                     }
                 }
@@ -94,10 +90,10 @@ namespace kursach.Model
                 }
             }
             connection.CloseConnection();
-            return services;
+            return orderservice;
         }
 
-        internal bool Update(kursachModel.Services edit)
+        internal bool Update(Orderservice edit)
         {
             bool result = false;
             if (connection == null)
@@ -105,9 +101,8 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"update `Services` set `Title`=@title,`Price`=@price, = {edit.Id}");
-                mc.Parameters.Add(new MySqlParameter("Title", edit.Title));
-                mc.Parameters.Add(new MySqlParameter("Price", edit.Price));
+                var mc = connection.CreateCommand($"update `Orderservice` set `Date`=@date, = {edit.ID}");
+                mc.Parameters.Add(new MySqlParameter("Data", edit.Data));
 
                 try
                 {
@@ -124,7 +119,7 @@ namespace kursach.Model
         }
 
 
-        internal bool Remove(kursachModel.Services remove)
+        internal bool Remove(Orderservice remove)
         {
             bool result = false;
             if (connection == null)
@@ -132,7 +127,7 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"delete from ` Title` Price` = {remove.Id}");
+                var mc = connection.CreateCommand($"delete from `Date`  = {remove.ID}");
                 try
                 {
                     mc.ExecuteNonQuery();
@@ -147,11 +142,11 @@ namespace kursach.Model
             return result;
         }
 
-        static ServicesDB db;
-        public static ServicesDB GetDb()
+        static OrderserviceDB db;
+        public static OrderserviceDB GetDb()
         {
             if (db == null)
-                db = new ServicesDB(DBConnection.GetDbConnection());
+                db = new OrderserviceDB(DBConnection.GetDbConnection());
             return db;
         }
     }

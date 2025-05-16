@@ -18,7 +18,7 @@ namespace kursach.Model
             this.connection = db;
         }
 
-        public bool Insert(Number number)
+        public bool Insert(kursachModel.Number number)
         {
             bool result = false;
             if (connection == null)
@@ -58,15 +58,15 @@ namespace kursach.Model
             return result;
         }
 
-        internal List<Number> SelectAll()
+        internal List<kursachModel.Number> SelectAll()
         {
-            List<Number> number = new List<Number>();
+            List<kursachModel.Number> number = new List<kursachModel.Number>();
             if (connection == null)
                 return number;
 
             if (connection.OpenConnection())
             {
-                var command = connection.CreateCommand("select `ID`, `Numberroom`, `Type`,`Status`,`Price`");
+                var command = connection.CreateCommand("select `ID`, `Numberroom`, `Type`,`Status`,`Price` where Number");
                 try
                 {
 
@@ -89,7 +89,7 @@ namespace kursach.Model
                         if (!dr.IsDBNull(4))
                             price = dr.GetInt16("Price");
 
-                        number.Add(new Number
+                        number.Add(new kursachModel.Number
                         {
                             Id = id,
                             Numberroom = numberroom,
@@ -108,7 +108,7 @@ namespace kursach.Model
             return number;
         }
 
-        internal bool Update(Number edit)
+        internal bool Update(kursachModel.Number edit)
         {
             bool result = false;
             if (connection == null)
@@ -137,7 +137,7 @@ namespace kursach.Model
         }
 
 
-        internal bool Remove(Number remove)
+        internal bool Remove(kursachModel.Number remove)
         {
             bool result = false;
             if (connection == null)
@@ -164,7 +164,7 @@ namespace kursach.Model
         public static NumberDB GetDb()
         {
             if (db == null)
-                db = new NumberDB(DBConnection.GetDBConnection());
+                db = new NumberDB(DBConnection.GetDbConnection());
             return db;
         }
     }

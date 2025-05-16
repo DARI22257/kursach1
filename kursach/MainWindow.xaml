@@ -5,22 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:kursach"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Background="#43b7a2">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+           
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Отель" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="1" Margin="10">
-            <Button Content="Бронировать" Width="150" Height="30" Click="NavigateButton_Click"/>
-        </StackPanel>
-            </Grid>
-        </Grid>
+        <TextBlock Text="Pushkin Residence" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
+
+        <Button Content="Бронировать" Grid.Row="1" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click"/>
+        <Button Content="Добавить сотрудника" Grid.Row="2" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click1"/>
+        <Button Content="Добавить услугу" Grid.Row="3" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click2"/>
+        <Button Content="Добавить номер" Grid.Row="4" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click3"/>
+    </Grid>
 </Window>

@@ -11,9 +11,9 @@ namespace kursach
 {
     class BookingDB
     {
-        DbConnection connection;
+        DBConnection connection;
 
-        private BookingDB(DbConnection db)
+        private BookingDB(DBConnection db)
         {
             this.connection = db;
         }
@@ -66,7 +66,7 @@ namespace kursach
 
             if (connection.OpenConnection())
             {
-                var command = connection.CreateCommand("select `ID`, `Room numbers`, `Date start`,`Date end`,`Status`");
+                var command = connection.CreateCommand("select `ID`, `Room numbers`, `Date start`,`Date end`,`Status` from Booking");
                 try
                 {
                     
@@ -165,7 +165,7 @@ namespace kursach
         public static BookingDB GetDb()
         {
             if (db == null)
-                db = new BookingDB(DbConnection.GetDbConnection());
+                db = new BookingDB(DBConnection.GetDbConnection());
             return db;
         }
     }

@@ -11,9 +11,9 @@ namespace kursach.Model
 {
     internal class employeesDB
     {
-        DbConnection connection;
+        DBConnection connection;
 
-        private employeesDB(DbConnection db)
+        private employeesDB(DBConnection db)
         {
             connection = db;
         }
@@ -29,9 +29,9 @@ namespace kursach.Model
                 MySqlCommand cmd = connection.CreateCommand("insert into `employees` Values (0, @name, @Jobtitle,@Schedule, @Phone);select LAST_INSERT_ID();");
 
                 cmd.Parameters.Add(new MySqlParameter("name", employees.name));
-                cmd.Parameters.Add(new MySqlParameter("jobtitle", employees.Jobtitle));
-                cmd.Parameters.Add(new MySqlParameter("schedule", employees.Schedule));
-                cmd.Parameters.Add(new MySqlParameter("phone", employees.Phone));
+                cmd.Parameters.Add(new MySqlParameter("Jobtitle", employees.Jobtitle));
+                cmd.Parameters.Add(new MySqlParameter("Schedule", employees.Schedule));
+                cmd.Parameters.Add(new MySqlParameter("Phone", employees.Phone));
 
                 try
                 {
@@ -65,7 +65,7 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                var command = connection.CreateCommand("select `id`, `name`, `jobtitle` schedule `phone` ");
+                var command = connection.CreateCommand("select `id`, `name`, `Jobtitle`,  `Schedule`,`Phone` where employees ");
                 try
                 {
                     MySqlDataReader dr = command.ExecuteReader();
@@ -80,11 +80,11 @@ namespace kursach.Model
                         if (!dr.IsDBNull(1))
                             name = dr.GetString("name");
                         if (!dr.IsDBNull(1))
-                            jobtitle = dr.GetString("jobtitle");
+                            jobtitle = dr.GetString("Jobtitle");
                         if (!dr.IsDBNull(1))
-                            schedule = dr.GetDateTime("shedule");
+                            schedule = dr.GetDateTime("Shedule");
                         if (!dr.IsDBNull(1))
-                            phone = dr.GetString("phone");
+                            phone = dr.GetString("Phone");
                         employees.Add(new employees
                         {
                             Id = id,
@@ -112,11 +112,11 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"update `employees` set `name`=@name, `Jobtitle`=@Jobtitle,`schedule`=@schedule, `phone`=@phone,  where `id` = {edit.Id}");
+                var mc = connection.CreateCommand($"update `employees` set `name`=@name, `jobtitle`=@Jobtitle,`schedule`=@Schedule, `phone`=@Phone,  where `id` = {edit.Id}");
                 mc.Parameters.Add(new MySqlParameter("name", edit.name));
-                mc.Parameters.Add(new MySqlParameter("jobtitle", edit.Jobtitle));
-                mc.Parameters.Add(new MySqlParameter("schedule", edit.Schedule));
-                mc.Parameters.Add(new MySqlParameter("phone", edit.Phone));
+                mc.Parameters.Add(new MySqlParameter("Jobtitle", edit.Jobtitle));
+                mc.Parameters.Add(new MySqlParameter("Schedule", edit.Schedule));
+                mc.Parameters.Add(new MySqlParameter("Phone", edit.Phone));
 
                 try
                 {
@@ -141,7 +141,7 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"delete from `employees` where `id`,`name`,`jobtitle`,`schedule`,`phone` = {remove.ID}");
+                var mc = connection.CreateCommand($"delete from `employees` where `id`,`name`,`Jobtitle`,`Schedule`,`Phone` = {remove.Id}");
                 try
                 {
                     mc.ExecuteNonQuery();
@@ -160,7 +160,7 @@ namespace kursach.Model
         public static employeesDB GetDb()
         {
             if (db == null)
-                db = new employeesDB(DbConnection.GetDbConnection());
+                db = new employeesDB(DBConnection.GetDbConnection());
             return db;
         }
     }

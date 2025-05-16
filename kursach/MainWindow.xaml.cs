@@ -20,9 +20,27 @@ namespace kursach
         {
             InitializeComponent();
         }
+
+        private void InitializeComponent()
+        {
+            throw new NotImplementedException();
+        }
+
         private void NavigateButton_Click(object sender, RoutedEventArgs e)
         {
             Guests guests = new Guests(); guests.Show();
+        }
+        private void NavigateButton_Click1(object sender, RoutedEventArgs e)
+        {
+            Employees employees = new Employees(); employees.Show();
+        }
+        private void NavigateButton_Click2(object sender, RoutedEventArgs e)
+        {
+            Services services = new Services(); services.Show();
+        }
+        private void NavigateButton_Click3(object sender, RoutedEventArgs e)
+        {
+            Number number = new Number(); number.Show();
         }
     }
 }
