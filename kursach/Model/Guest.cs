@@ -15,7 +15,7 @@ namespace kursach
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Passportdata{ get; set; }
-
+        public string IDBooking { get; set; }
 
     }
 }

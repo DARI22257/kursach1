@@ -5,9 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:kursach"
         xmlns:mvvm="clr-namespace:kursach.View" 
-        d:DataContext="{d:DesignInstance Type=mvvm:employeesMvvm}"
+        DataContext="{DynamicResource vm}"
         mc:Ignorable="d"
         Title="Employees" Height="450" Width="800" Background="#88d3c6">
+    <Window.Resources>
+        <mvvm:employeesMvvm x:Key="vm"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -18,15 +21,15 @@
             <RowDefinition  />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0" Margin="10" DataContext="{Binding Newemployees}" >
+        <StackPanel Grid.Column="0" Margin="10">
             <Label Content="Имя"/>
-            <TextBox Text="{Binding name}"/>
+            <TextBox Text="{Binding Newemployees.name}"/>
             <Label Content="Должность"/>
-            <TextBox Text="{Binding Jobtitle}"/>
+            <TextBox Text="{Binding Newemployees.Jobtitle}"/>
             <Label Content="График работы"/>
-            <TextBox Text="{Binding Schedule}"/>
+            <TextBox Text="{Binding Newemployees.Schedule}"/>
             <Label Content="Номер телефона"/>
-            <TextBox Text="{Binding Phone}"/>
+            <TextBox Text="{Binding Newemployees.Phone}"/>
         </StackPanel>
 
 

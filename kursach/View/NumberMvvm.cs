@@ -1,6 +1,7 @@
 ﻿using kursach.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,13 +21,26 @@ namespace kursach.View
                 Signal();
             }
         }
+        private ObservableCollection<Number> number ;
 
-        public CommandMvvm InsertClient { get; set; }
+        public ObservableCollection<Number> Number
+        {
+
+            get => number;
+            set
+            {
+                number = value;
+                Signal();
+            }
+        }
+        public CommandMvvm InsertNumber { get; set; }
         public NumberMvvm()
         {
-            InsertClient = new CommandMvvm(() =>
+            Number = new ObservableCollection<Number>(NumberDB.GetDb().SelectAll());
+            InsertNumber = new CommandMvvm(() =>
             {
-                NumberDB.GetDb().Insert(NewNumber);
+                NumberDB.GetDb().Insert(newNumber); 
+                Number.Add(NewNumber); 
                 close?.Invoke();
             },
                 () =>

@@ -4,12 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:kursach"
+        xmlns:mvvm="clr-namespace:kursach.View" 
+        DataContext="{DynamicResource vm}"
         mc:Ignorable="d"
         Title="Guests" Height="450" Width="800" Background="#88d3c6">
+    <Window.Resources>
+        <mvvm:GuestMvvm x:Key="vm"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -27,17 +32,20 @@
             <TextBox Text="{Binding Phone}"/>
             <Label Content="Email"/>
             <TextBox Text="{Binding Email}"/>
+            <Label Content="Паспортные данные"/>
+            <TextBox Text="{Binding Passportdata}"/>
         </StackPanel>
 
 
-        <ListView Grid.Column="1" ItemsSource="{Binding Guest}" SelectedItem="{Binding SelectGuest}" >
+        <ListView Grid.Column="1" ItemsSource="{Binding Guest}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Name}" Width="100"/>
+                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Firstname}" Width="100"/>
                     <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding Lastname}" Width="100"/>
                     <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding Surname}" Width="100"/>
                     <GridViewColumn Header="Номер телефона" DisplayMemberBinding="{Binding Phone}"/>
                     <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"/>
+                    <GridViewColumn Header="Паспортные данные" DisplayMemberBinding="{Binding Passportdata}"/>
                 </GridView>
             </ListView.View>
             

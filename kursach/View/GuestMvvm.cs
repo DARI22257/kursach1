@@ -1,5 +1,7 @@
-﻿using System;
+﻿using kursach.Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,13 +22,26 @@ namespace kursach.View
                 Signal();
             }
         }
+        private ObservableCollection<Guest> guest;
 
-        public CommandMvvm InsertClient { get; set; }
+        public ObservableCollection<Guest> Guest
+        {
+            get => guest;
+            set
+            {
+                guest = value;
+                Signal();
+            }
+        }
+
+        public CommandMvvm InsertGuest { get; set; }
         public GuestMvvm()
         {
-            InsertClient = new CommandMvvm(() =>
+            Guest = new ObservableCollection<Guest>(GuestDB.GetDb().SelectAll());
+            InsertGuest = new CommandMvvm(() =>
             {
                 GuestDB.GetDb().Insert(NewGuest);
+                Guest.Add(NewGuest);
                 close?.Invoke();
             },
                 () =>
@@ -36,6 +51,7 @@ namespace kursach.View
                 !string.IsNullOrEmpty(newGuest.Phone) &&
                 !string.IsNullOrEmpty(newGuest.Email) &&
                 !string.IsNullOrEmpty(newGuest.Passportdata));
+
         }
         Action close;
         internal void SetClose(Action close)

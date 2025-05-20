@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace kursach
 {
-    class CommandMvvm
+    public class CommandMvvm: ICommand
     {
         Action action;
         Func<bool> canExecute;

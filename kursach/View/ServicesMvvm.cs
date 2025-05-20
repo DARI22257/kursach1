@@ -1,6 +1,8 @@
 ﻿using kursach.Model;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,13 +22,26 @@ namespace kursach.View
                 Signal();
             }
         }
+        private ObservableCollection<Services> services;
 
-        public CommandMvvm InsertClient { get; set; }
+        public ObservableCollection<Services> Services
+        {
+            get => services;
+            set
+            {
+                services = value;
+                Signal();
+            }
+        }
+
+        public CommandMvvm InsertServices { get; set; }
         public ServicesMvvm()
         {
-            InsertClient = new CommandMvvm(() =>
+           // Services = new ObservableCollection<Services>(ServicesDB.GetDb().SelectAll());
+            InsertServices = new CommandMvvm(() =>
             {
-                ServicesDB.GetDb().Insert(NewServices);
+                ServicesDB.GetDb().Insert(newServices);
+                //Services.Add(NewServices);
                 close?.Invoke();
             },
                 () =>

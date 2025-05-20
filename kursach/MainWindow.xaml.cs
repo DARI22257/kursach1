@@ -21,10 +21,6 @@ namespace kursach
             InitializeComponent();
         }
 
-        private void InitializeComponent()
-        {
-            throw new NotImplementedException();
-        }
 
         private void NavigateButton_Click(object sender, RoutedEventArgs e)
         {

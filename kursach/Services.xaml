@@ -4,8 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:kursach"
+        xmlns:mvvm="clr-namespace:kursach.View" 
+        DataContext="{DynamicResource vm}"
         mc:Ignorable="d"
         Title="Services" Height="450" Width="800" Background="#88d3c6">
+    <Window.Resources>
+        <mvvm:ServicesMvvm x:Key="vm"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
@@ -24,7 +29,7 @@
         </StackPanel>
 
 
-        <ListView Grid.Column="1" ItemsSource="{Binding Services}" SelectedItem="{Binding SelectServices}" >
+        <ListView Grid.Column="1" ItemsSource="{Binding Services}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding Price}" Width="100"/>

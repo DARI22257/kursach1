@@ -26,21 +26,21 @@ namespace kursach
 
             if (connection.OpenConnection())
             {
-                MySqlCommand cmd = connection.CreateCommand("insert into `Guest` Values (0, @Name, @Surname, @Lastname, @Phone, @Email, @Passport data);select LAST_INSERT_ID();");
+                MySqlCommand cmd = connection.CreateCommand("insert into `Guest` Values (0, @Firstname, @Surname, @Lastname, @Phone, @Email, @Passportdata);select LAST_INSERT_ID();");
 
-                cmd.Parameters.Add(new MySqlParameter("Name", guest.FirstName));
+                cmd.Parameters.Add(new MySqlParameter("Firstname", guest.FirstName));
                 cmd.Parameters.Add(new MySqlParameter("Surname", guest.Surname));
                 cmd.Parameters.Add(new MySqlParameter("Lastname", guest.Lastname));
                 cmd.Parameters.Add(new MySqlParameter("Phone", guest.Phone));
                 cmd.Parameters.Add(new MySqlParameter("Email", guest.Email));
-                cmd.Parameters.Add(new MySqlParameter("Passport data", guest.Passportdata));
+                cmd.Parameters.Add(new MySqlParameter("Passportdata", guest.Passportdata));
+
 
                 try
                 {
                     int id = (int)(ulong)cmd.ExecuteScalar();
                     if (id > 0)
                     {
-                        MessageBox.Show(id.ToString());
                         guest.Id = id;
                         result = true;
                     }
@@ -66,22 +66,23 @@ namespace kursach
 
             if (connection.OpenConnection())
             {
-                var command = connection.CreateCommand("select `id`, `Name`, `Surname`,`Lastname`,`Phone`,`Email`,`Passport data` from Guest ");
+                var command = connection.CreateCommand("select `Id`, `Firstname`, `Surname`,`Lastname`,`Phone`,`Email`,`Passportdata` from `Guest` ");
                 try
                 {
                     MySqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
                         int id = dr.GetInt32(0);
-                        string Name = string.Empty;
+                        string Firstname = string.Empty;
                         string Surname = string.Empty;
                         string Lastname = string.Empty;
                         string Phone = string.Empty;
                         string Email = string.Empty;
                         string Passportdata = string.Empty;
+                        
 
                         if (!dr.IsDBNull(1))
-                            Name = dr.GetString("Name");
+                            Firstname = dr.GetString("Name");
                         if (!dr.IsDBNull(2))
                             Surname = dr.GetString("Surname");
                         if (!dr.IsDBNull(3))
@@ -90,17 +91,18 @@ namespace kursach
                             Phone = dr.GetString("Phone");
                         if (!dr.IsDBNull(5))
                             Email = dr.GetString("Email");
-                        if (!dr.IsDBNull(1))
+                        if (!dr.IsDBNull(6))
                             Passportdata = dr.GetString("Passportdata");
 
                         guests.Add(new Guest
                         {
                             Id = id,
-                            FirstName = Name,
+                            FirstName = Firstname,
                             Surname = Surname,
                             Lastname = Lastname,
                             Phone = Phone,
                             Email = Email,
+                            Passportdata = Passportdata,
                         });
                     }
                 }
@@ -152,7 +154,7 @@ namespace kursach
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"delete from `Firstname` Surname` Lastname` Phone` Email` Passpotdata` = {remove.Id}");
+                var mc = connection.CreateCommand($"delete from `Guest` where `Id` = {remove.Id}");
                 try
                 {
                     mc.ExecuteNonQuery();

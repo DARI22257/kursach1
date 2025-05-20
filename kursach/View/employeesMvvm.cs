@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace kursach.View
 {
-    internal class employeesMvvm : BaseVM
+    public class employeesMvvm : BaseVM
     {
         private employees newemployees = new();
 
@@ -22,7 +22,7 @@ namespace kursach.View
                 Signal();
             }
         }
-        private ObservableCollection<employees> employees = new();
+        private ObservableCollection<employees> employees;
 
         public ObservableCollection<employees> Employees
         {
@@ -37,15 +37,16 @@ namespace kursach.View
         public CommandMvvm InsertEmployees { get; set; }
         public employeesMvvm()
         {
+            Employees = new ObservableCollection<employees>(employeesDB.GetDb().SelectAll());
             InsertEmployees = new CommandMvvm(() =>
             {
                 employeesDB.GetDb().Insert(newemployees);
+                Employees.Add(Newemployees);
                 close?.Invoke();
             },
                 () =>
                 !string.IsNullOrEmpty(newemployees.name) &&
                 !string.IsNullOrEmpty(newemployees.Jobtitle) &&
-                DateTime.MinValue != newemployees.Schedule &&
                 !string.IsNullOrEmpty(newemployees.Phone));
         }
         Action close;

@@ -26,11 +26,11 @@ namespace kursach
 
             if (connection.OpenConnection())
             {
-                MySqlCommand cmd = connection.CreateCommand("insert into `Booking` Values (0,@Room numbers,@Date start,@Date end,@Status);select LAST_INSERT_ID();");
+                MySqlCommand cmd = connection.CreateCommand("insert into `Booking` Values (0,@Numberroom,@Datestart,@Dateend,@Status);select LAST_INSERT_ID();");
 
-                cmd.Parameters.Add(new MySqlParameter("Room numbers", booking.Numberroom));
-                cmd.Parameters.Add(new MySqlParameter("Date start", booking.Datestart));
-                cmd.Parameters.Add(new MySqlParameter("Date end", booking.Dateend));
+                cmd.Parameters.Add(new MySqlParameter("Numberroom", booking.Numberroom));
+                cmd.Parameters.Add(new MySqlParameter("Datestart", booking.Datestart));
+                cmd.Parameters.Add(new MySqlParameter("Dateend", booking.Dateend));
                 cmd.Parameters.Add(new MySqlParameter("Status", booking.Status));
 
                 try
@@ -66,7 +66,7 @@ namespace kursach
 
             if (connection.OpenConnection())
             {
-                var command = connection.CreateCommand("select `ID`, `Room numbers`, `Date start`,`Date end`,`Status` from Booking");
+                var command = connection.CreateCommand("select `ID`, `Numberroom`, `Datestart`,`Dateend`,`Status` from `Booking`");
                 try
                 {
                     
@@ -75,25 +75,25 @@ namespace kursach
                     while (dr.Read())
                     {
                         int id = dr.GetInt32(0);
-                        int roomnumbers = 0;
+                        int numberroom = 0;
                         DateTime datestart = DateTime.Now;
                         DateTime dateend = DateTime.Now;
                         string status = string.Empty;
 
 
                         if (!dr.IsDBNull(1))
-                            roomnumbers = dr.GetInt16("Room numbers");
+                            numberroom = dr.GetInt16("Numberroom");
                         if (!dr.IsDBNull(2))
-                            datestart = dr.GetDateTime("Date start");
+                            datestart = dr.GetDateTime("Datestart");
                         if (!dr.IsDBNull(3))
-                            dateend = dr.GetDateTime("Date end");
+                            dateend = dr.GetDateTime("Dateend");
                         if (!dr.IsDBNull(4))
                             status = dr.GetString("Status");
 
                         booking.Add(new Booking
                         {
                             Id = id,
-                            Numberroom = roomnumbers,
+                            Numberroom = numberroom,
                             Datestart = datestart,
                             Dateend = dateend,
                             Status = status,
@@ -117,10 +117,10 @@ namespace kursach
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"update `Booking` set `Room numbers`=@room numbers, `Date start`=@date start where `id`,`Date end`=@date end,`Status`=@status, = {edit.Id}");
-                mc.Parameters.Add(new MySqlParameter("Room numbers", edit.Numberroom));
-                mc.Parameters.Add(new MySqlParameter("Date start", edit.Datestart));
-                mc.Parameters.Add(new MySqlParameter("Date end", edit.Dateend));
+                var mc = connection.CreateCommand($"update `Booking` set `Numberroom`=@numberroom, `Datestart`=@datestart where `id`,`Dateend`=@dateend,`Status`=@status, = {edit.Id}");
+                mc.Parameters.Add(new MySqlParameter("Numberroom", edit.Numberroom));
+                mc.Parameters.Add(new MySqlParameter("Datestart", edit.Datestart));
+                mc.Parameters.Add(new MySqlParameter("Dateend", edit.Dateend));
                 mc.Parameters.Add(new MySqlParameter("Status", edit.Status));
 
                 try
@@ -146,7 +146,7 @@ namespace kursach
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"delete from `Room numbers` Date start `Date end` `Status` = {remove.Id}");
+                var mc = connection.CreateCommand($"delete from `Booking` where `id` = {remove.Id}");
                 try
                 {
                     mc.ExecuteNonQuery();

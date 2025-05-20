@@ -39,7 +39,6 @@ namespace kursach.Model
                     int id = (int)(ulong)cmd.ExecuteScalar();
                     if (id > 0)
                     {
-                        MessageBox.Show(id.ToString());
                         employees.Id = id;
                         result = true;
                     }
@@ -65,7 +64,7 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                var command = connection.CreateCommand("select `id`, `name`, `Jobtitle`,  `Schedule`,`Phone` where employees ");
+                var command = connection.CreateCommand("select `id`, `name`, `Jobtitle`,  `Schedule`,`Phone` from `employees` ");
                 try
                 {
                     MySqlDataReader dr = command.ExecuteReader();
@@ -82,7 +81,7 @@ namespace kursach.Model
                         if (!dr.IsDBNull(1))
                             jobtitle = dr.GetString("Jobtitle");
                         if (!dr.IsDBNull(1))
-                            schedule = dr.GetDateTime("Shedule");
+                            schedule = dr.GetDateTime("Schedule");
                         if (!dr.IsDBNull(1))
                             phone = dr.GetString("Phone");
                         employees.Add(new employees

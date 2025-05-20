@@ -4,8 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:kursach"
+        xmlns:mvvm="clr-namespace:kursach.View" 
+        DataContext="{DynamicResource vm}"
         mc:Ignorable="d"
         Title="Booking1" Height="450" Width="800" Background="#88d3c6">
+    <Window.Resources>
+        <mvvm:BookingMvvm x:Key="vm"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
@@ -16,7 +21,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0" Margin="10" DataContext="{Binding NewBooking1}" >
+        <StackPanel Grid.Column="0" Margin="10" DataContext="{Binding NewBooking}" >
             <Label Content="Дата заеда"/>
             <TextBox Text="{Binding Datestart}"/>
             <Label Content="Дата выезда"/>
@@ -25,10 +30,10 @@
             <TextBox Text="{Binding Status}"/>
         </StackPanel>
 
-        <ListView Grid.Column="1" ItemsSource="{Binding Booking1}" SelectedItem="{Binding SelectBooking1}" >
+        <ListView Grid.Column="1" ItemsSource="{Binding Booking}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Дата заезда в номер" DisplayMemberBinding="{Binding Lastname}" Width="100"/>
+                    <GridViewColumn Header="Дата заезда" DisplayMemberBinding="{Binding Lastname}" Width="100"/>
                     <GridViewColumn Header="Дата вызда" DisplayMemberBinding="{Binding Surname}" Width="100"/>
                     <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Phone}"/>
                 </GridView>
@@ -37,7 +42,7 @@
         </ListView>
 
         <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10">
-            <Button Content="Бронировать" Width="150" Height="40" Background="LightCyan" Command="{Binding InsertBooking1}" />
+            <Button Content="Бронировать" Width="150" Height="40" Background="LightCyan" Command="{Binding InsertBooking}" />
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">

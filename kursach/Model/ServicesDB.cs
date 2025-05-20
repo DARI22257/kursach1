@@ -25,10 +25,10 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                MySqlCommand cmd = connection.CreateCommand("insert into `Services` Values (0,@Title,@Price);select LAST_INSERT_ID();");
+                MySqlCommand cmd = connection.CreateCommand("insert into `Services` Values (0,@Title,@price);select LAST_INSERT_ID();");
 
                 cmd.Parameters.Add(new MySqlParameter("Title", services.Title));
-                cmd.Parameters.Add(new MySqlParameter("Price", services.Price));
+                cmd.Parameters.Add(new MySqlParameter("price", services.Price));
 
                 try
                 {
@@ -36,8 +36,6 @@ namespace kursach.Model
                     int id = (int)(ulong)cmd.ExecuteScalar();
                     if (id > 0)
                     {
-                        MessageBox.Show(id.ToString());
-
                         services.Id = id;
                         result = true;
                     }
@@ -63,12 +61,11 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                var command = connection.CreateCommand("select `ID`, `Title`, `Price` from Services");
+                var command = connection.CreateCommand("select `ID`, `Title`, `price` from `Services`");
                 try
                 {
 
                     MySqlDataReader dr = command.ExecuteReader();
-
                     while (dr.Read())
                     {
                         int id = dr.GetInt32(0);
@@ -76,7 +73,7 @@ namespace kursach.Model
                         string title = string.Empty;
                         
                         if (!dr.IsDBNull(1))
-                            price = dr.GetInt16("Price");
+                            price = dr.GetInt16("price");
                         if (!dr.IsDBNull(2))
                             title = dr.GetString("Title");
 
@@ -105,9 +102,9 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"update `Services` set `Title`=@title,`Price`=@price, = {edit.Id}");
+                var mc = connection.CreateCommand($"update `Services` set `Title`=@title,`price`=@price, = {edit.Id}");
                 mc.Parameters.Add(new MySqlParameter("Title", edit.Title));
-                mc.Parameters.Add(new MySqlParameter("Price", edit.Price));
+                mc.Parameters.Add(new MySqlParameter("price", edit.Price));
 
                 try
                 {
@@ -132,7 +129,7 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"delete from ` Title` Price` = {remove.Id}");
+                var mc = connection.CreateCommand($"delete from `Services` where `ID` = {remove.Id}");
                 try
                 {
                     mc.ExecuteNonQuery();

@@ -4,8 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:kursach"
+        xmlns:mvvm="clr-namespace:kursach.View" 
+        DataContext="{DynamicResource vm}"
         mc:Ignorable="d"
         Title="Number" Height="450" Width="800" Background="#88d3c6">
+    <Window.Resources>
+        <mvvm:NumberMvvm x:Key="vm"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
@@ -28,7 +33,7 @@
         </StackPanel>
 
 
-        <ListView Grid.Column="1" ItemsSource="{Binding Number}" SelectedItem="{Binding SelectNumber}" >
+        <ListView Grid.Column="1" ItemsSource="{Binding Number}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Номер комнаты" DisplayMemberBinding="{Binding Numberroom}" Width="100"/>

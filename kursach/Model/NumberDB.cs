@@ -66,7 +66,7 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                var command = connection.CreateCommand("select `ID`, `Numberroom`, `Type`,`Status`,`Price` where Number");
+                var command = connection.CreateCommand("select `ID`, `Numberroom`, `Type`,`Status`,`Price` where `Number`");
                 try
                 {
 
@@ -116,7 +116,7 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"update `Number` set `Numberroom`=@numberroom, `Type`=@type where `id`,`Status`=@status,`Price`=@price, = {edit.Id}");
+                var mc = connection.CreateCommand($"update `Number` set `Numberroom`=@numberroom, `Type`=@type where,`id`,`Status`=@status,`Price`=@price, = {edit.Id}");
                 mc.Parameters.Add(new MySqlParameter("Numberroom", edit.Numberroom));
                 mc.Parameters.Add(new MySqlParameter("Type", edit.Type));
                 mc.Parameters.Add(new MySqlParameter("Status", edit.Status));
@@ -145,7 +145,7 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"delete from `Numberroom` Type `Status` Price ` = {remove.Id}");
+                var mc = connection.CreateCommand($"delete from `Number` where `ID` = {remove.Id}");
                 try
                 {
                     mc.ExecuteNonQuery();

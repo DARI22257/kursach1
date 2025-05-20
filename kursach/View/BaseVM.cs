@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace kursach
 {
-    
-    internal class BaseVM : INotifyPropertyChanged
+
+    public class BaseVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void Signal([CallerMemberName] string prop = null) =>
