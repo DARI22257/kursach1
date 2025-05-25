@@ -24,7 +24,7 @@ namespace kursach
 
         private void NavigateButton_Click(object sender, RoutedEventArgs e)
         {
-            Guests guests = new Guests(); guests.Show();
+            Booking1 booking1 = new Booking1(); booking1.Show();
         }
         private void NavigateButton_Click1(object sender, RoutedEventArgs e)
         {
@@ -37,6 +37,10 @@ namespace kursach
         private void NavigateButton_Click3(object sender, RoutedEventArgs e)
         {
             Number number = new Number(); number.Show();
+        }
+        private void NavigateButton_Click4(object sender, RoutedEventArgs e)
+        {
+            Guests guests = new Guests(); guests.Show();
         }
     }
 }

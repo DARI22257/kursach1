@@ -82,7 +82,7 @@ namespace kursach
                         
 
                         if (!dr.IsDBNull(1))
-                            Firstname = dr.GetString("Name");
+                            Firstname = dr.GetString("Firstname");
                         if (!dr.IsDBNull(2))
                             Surname = dr.GetString("Surname");
                         if (!dr.IsDBNull(3))

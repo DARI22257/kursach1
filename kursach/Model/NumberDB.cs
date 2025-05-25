@@ -18,7 +18,7 @@ namespace kursach.Model
             this.connection = db;
         }
 
-        public bool Insert(kursachModel.Number number)
+        public bool Insert(kursachModel.NumberModel number)
         {
             bool result = false;
             if (connection == null)
@@ -39,8 +39,6 @@ namespace kursach.Model
                     int id = (int)(ulong)cmd.ExecuteScalar();
                     if (id > 0)
                     {
-                        MessageBox.Show(id.ToString());
-
                         number.Id = id;
                         result = true;
                     }
@@ -58,15 +56,15 @@ namespace kursach.Model
             return result;
         }
 
-        internal List<kursachModel.Number> SelectAll()
+        internal List<kursachModel.NumberModel> SelectAll()
         {
-            List<kursachModel.Number> number = new List<kursachModel.Number>();
+            List<kursachModel.NumberModel> number = new List<kursachModel.NumberModel>();
             if (connection == null)
                 return number;
 
             if (connection.OpenConnection())
             {
-                var command = connection.CreateCommand("select `ID`, `Numberroom`, `Type`,`Status`,`Price` where `Number`");
+                var command = connection.CreateCommand("select `ID`, `Numberroom`, `Type`,`Status`,`Price` from `Number`");
                 try
                 {
 
@@ -89,7 +87,7 @@ namespace kursach.Model
                         if (!dr.IsDBNull(4))
                             price = dr.GetInt16("Price");
 
-                        number.Add(new kursachModel.Number
+                        number.Add(new kursachModel.NumberModel
                         {
                             Id = id,
                             Numberroom = numberroom,
@@ -108,7 +106,7 @@ namespace kursach.Model
             return number;
         }
 
-        internal bool Update(kursachModel.Number edit)
+        internal bool Update(kursachModel.NumberModel edit)
         {
             bool result = false;
             if (connection == null)
@@ -137,7 +135,7 @@ namespace kursach.Model
         }
 
 
-        internal bool Remove(kursachModel.Number remove)
+        internal bool Remove(kursachModel.NumberModel remove)
         {
             bool result = false;
             if (connection == null)

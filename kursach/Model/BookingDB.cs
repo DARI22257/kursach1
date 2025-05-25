@@ -66,7 +66,7 @@ namespace kursach
 
             if (connection.OpenConnection())
             {
-                var command = connection.CreateCommand("select `ID`, `Numberroom`, `Datestart`,`Dateend`,`Status` from `Booking`");
+                var command = connection.CreateCommand("select b.`ID`, n.`Numberroom`, b.`Datestart`,b.`Dateend`,b.`Status` from `Booking` b join `Number` n on n.`ID` = b.`IDroom`");
                 try
                 {
                     

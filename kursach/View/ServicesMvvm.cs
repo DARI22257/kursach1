@@ -1,4 +1,5 @@
 ﻿using kursach.Model;
+using kursachModel;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace kursach.View
 {
     internal class ServicesMvvm : BaseVM
     {
-        private kursachModel.Services newServices = new();
+        private kursachModel.ServicesModel newServices = new();
 
-        public kursachModel.Services NewServices
+        public kursachModel.ServicesModel NewServices
         {
             get => newServices;
             set
@@ -22,9 +23,9 @@ namespace kursach.View
                 Signal();
             }
         }
-        private ObservableCollection<Services> services;
+        private ObservableCollection<ServicesModel> services;
 
-        public ObservableCollection<Services> Services
+        public ObservableCollection<ServicesModel> Services
         {
             get => services;
             set
@@ -37,11 +38,11 @@ namespace kursach.View
         public CommandMvvm InsertServices { get; set; }
         public ServicesMvvm()
         {
-           // Services = new ObservableCollection<Services>(ServicesDB.GetDb().SelectAll());
+            Services = new ObservableCollection<ServicesModel>(ServicesDB.GetDb().SelectAll().Select(s => (ServicesModel)s));
             InsertServices = new CommandMvvm(() =>
             {
                 ServicesDB.GetDb().Insert(newServices);
-                //Services.Add(NewServices);
+                Services.Add(NewServices);
                 close?.Invoke();
             },
                 () =>

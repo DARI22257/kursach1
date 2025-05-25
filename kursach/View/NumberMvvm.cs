@@ -1,4 +1,5 @@
 ﻿using kursach.Model;
+using kursachModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,9 +11,9 @@ namespace kursach.View
 {
     internal class NumberMvvm : BaseVM
     {
-        private kursachModel.Number newNumber = new();
+        private kursachModel.NumberModel newNumber = new();
 
-        public kursachModel.Number NewNumber
+        public kursachModel.NumberModel NewNumber
         {
             get => newNumber;
             set
@@ -21,9 +22,20 @@ namespace kursach.View
                 Signal();
             }
         }
-        private ObservableCollection<Number> number ;
+        private NumberModel selectedNumberModel = new NumberModel();
+        public NumberModel SelectedNumberModel
+        {
+            get => selectedNumberModel;
+            set
+            {
+                selectedNumberModel = value;
+                Signal();
+            }
+        }
 
-        public ObservableCollection<Number> Number
+        private ObservableCollection<NumberModel> number ;
+
+        public ObservableCollection<NumberModel> Number
         {
 
             get => number;
@@ -36,7 +48,7 @@ namespace kursach.View
         public CommandMvvm InsertNumber { get; set; }
         public NumberMvvm()
         {
-            Number = new ObservableCollection<Number>(NumberDB.GetDb().SelectAll());
+            Number = new ObservableCollection<NumberModel>(NumberDB.GetDb().SelectAll().Select(s => (NumberModel)s));
             InsertNumber = new CommandMvvm(() =>
             {
                 NumberDB.GetDb().Insert(newNumber); 

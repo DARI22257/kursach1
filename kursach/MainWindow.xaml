@@ -13,7 +13,9 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
-           
+            <RowDefinition/>
+            
+
         </Grid.RowDefinitions>
 
         <TextBlock Text="Pushkin Residence" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
@@ -22,5 +24,6 @@
         <Button Content="Добавить сотрудника" Grid.Row="2" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click1"/>
         <Button Content="Добавить услугу" Grid.Row="3" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click2"/>
         <Button Content="Добавить номер" Grid.Row="4" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click3"/>
+        <Button Content="Гости" Grid.Row="5" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click4"/>
     </Grid>
 </Window>

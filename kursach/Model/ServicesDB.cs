@@ -17,7 +17,7 @@ namespace kursach.Model
             this.connection = db;
         }
 
-        public bool Insert(kursachModel.Services services)
+        public bool Insert(kursachModel.ServicesModel services)
         {
             bool result = false;
             if (connection == null)
@@ -53,9 +53,9 @@ namespace kursach.Model
             return result;
         }
 
-        internal List<kursachModel.Services> SelectAll()
+        internal List<kursachModel.ServicesModel> SelectAll()
         {
-            List<kursachModel.Services> services = new List<kursachModel.Services>();
+            List<kursachModel.ServicesModel> services = new List<kursachModel.ServicesModel>();
             if (connection == null)
                 return services;
 
@@ -77,7 +77,7 @@ namespace kursach.Model
                         if (!dr.IsDBNull(2))
                             title = dr.GetString("Title");
 
-                        services.Add(new kursachModel.Services
+                        services.Add(new kursachModel.ServicesModel
                         {
                             Id = id,
                             Title = title,
@@ -94,7 +94,7 @@ namespace kursach.Model
             return services;
         }
 
-        internal bool Update(kursachModel.Services edit)
+        internal bool Update(kursachModel.ServicesModel edit)
         {
             bool result = false;
             if (connection == null)
@@ -121,7 +121,7 @@ namespace kursach.Model
         }
 
 
-        internal bool Remove(kursachModel.Services remove)
+        internal bool Remove(kursachModel.ServicesModel remove)
         {
             bool result = false;
             if (connection == null)
