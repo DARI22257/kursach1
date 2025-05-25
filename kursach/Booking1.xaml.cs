@@ -1,4 +1,6 @@
-﻿using System;
+﻿using kursach.Model;
+using kursach.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,10 +24,24 @@ namespace kursach
         public Booking1()
         {
             InitializeComponent();
+            DataContext = new BookingMvvm();
+            LoadGuests();
+            LoadAvailableRooms();
         }
         private void NavigateButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow(); mainWindow.Show();
+        }
+        private void LoadGuests()
+        {
+            GuestDataGrid.ItemsSource = GuestDB.GetDb().SelectAll();
+        }
+
+        private void LoadAvailableRooms()
+        {
+            var allRooms = NumberDB.GetDb().SelectAll();
+            var available = allRooms.FindAll(r => r.Status == "Свободен");
+            AvailableRoomsComboBox.ItemsSource = available;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using kursach.Model;
+using kursachModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,6 +22,22 @@ namespace kursach.View
                 Signal();
             }
         }
+
+        public ObservableCollection<Guest> Guests { get; set; }
+        public ObservableCollection<NumberModel> AvailableRooms { get; set; }
+
+        private NumberModel selectedRoom;
+        public NumberModel SelectedRoom
+        {
+            get => selectedRoom;
+            set
+            {
+                selectedRoom = value;
+                Signal();
+            }
+        }
+
+
         private ObservableCollection<Booking> booking = new();
 
         public ObservableCollection<Booking> Booking
@@ -47,6 +64,10 @@ namespace kursach.View
                 DateTime.MinValue != newBooking.Datestart &&
                 DateTime.MinValue != newBooking.Dateend &&
                 !string.IsNullOrEmpty(newBooking.Status));
+
+            Guests = new ObservableCollection<Guest>(GuestDB.GetDb().SelectAll());
+            var rooms = NumberDB.GetDb().SelectAll();
+            AvailableRooms = new ObservableCollection<NumberModel>(rooms.Where(r => r.Status == "Свободен"));
         }
         Action close;
         internal void SetClose(Action close)
