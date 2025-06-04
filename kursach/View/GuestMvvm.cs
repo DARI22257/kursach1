@@ -23,8 +23,17 @@ namespace kursach.View
             }
         }
         private ObservableCollection<Guest> guest;
-
-        public ObservableCollection<Guest> Guest
+        private Guest selectedGuest = new();
+        public Guest SelectedGuest
+        {
+            get => selectedGuest;
+            set
+            {
+                selectedGuest = value;
+                Signal();
+            }
+        }
+        public ObservableCollection<Guest> Guests
         {
             get => guest;
             set
@@ -37,11 +46,11 @@ namespace kursach.View
         public CommandMvvm InsertGuest { get; set; }
         public GuestMvvm()
         {
-            Guest = new ObservableCollection<Guest>(GuestDB.GetDb().SelectAll());
+            Guests = new ObservableCollection<Guest>(GuestDB.GetDb().SelectAll());
             InsertGuest = new CommandMvvm(() =>
             {
                 GuestDB.GetDb().Insert(NewGuest);
-                Guest.Add(NewGuest);
+                Guests.Add(NewGuest);
                 close?.Invoke();
             },
                 () =>
