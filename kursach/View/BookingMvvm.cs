@@ -23,8 +23,12 @@ namespace kursach.View
             }
         }
 
-        public ObservableCollection<Guest> Guests { get; set; }
-        public ObservableCollection<NumberModel> AvailableRooms { get; set; }
+        public ObservableCollection<Guest> Guests { get; set; } // поменял название листа, на которое было в Vm
+
+        public ObservableCollection<NumberModel> Number { get; set; } // поменял название листа, на которое было в Vm
+
+
+
 
         private NumberModel selectedRoom;
         public NumberModel SelectedRoom
@@ -67,9 +71,10 @@ namespace kursach.View
 
             Guests = new ObservableCollection<Guest>(GuestDB.GetDb().SelectAll());
             var rooms = NumberDB.GetDb().SelectAll();
-            AvailableRooms = new ObservableCollection<NumberModel>(rooms.Where(r => r.Status == "Свободен"));
+            Number = new ObservableCollection<NumberModel>(rooms.Where(r => r.Status == "Свободен"));
         }
         Action close;
+
         internal void SetClose(Action close)
         {
             this.close = close;

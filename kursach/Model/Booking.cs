@@ -9,7 +9,7 @@ namespace kursach
      public class Booking
     {
         public int Id { get; set; }
-        public int Numberroom{ get; set; }
+        public int Numberroom { get; set; }
         public DateTime Datestart { get; set; }
         public DateTime Dateend { get; set; }
         public string Status { get; set; }

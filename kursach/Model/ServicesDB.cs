@@ -73,7 +73,9 @@ namespace kursach.Model
                         string title = string.Empty;
                         
                         if (!dr.IsDBNull(1))
-                            price = dr.GetInt16("price");
+                            price = dr.GetInt32("price"); /* Исправил. Было GetInt16, Ты используешь GetInt16, который соответствует short в C# (диапазон значений от -32 768 до 32 767)
+                                                            Если в базе данных поле Price содержит значение больше 32 767(например, цена 50000), произойдёт переполнение → overflow.
+                                                           */
                         if (!dr.IsDBNull(2))
                             title = dr.GetString("Title");
 

@@ -37,7 +37,7 @@
         </StackPanel>
 
 
-        <ListView Grid.Column="1" ItemsSource="{Binding Guest}">
+        <ListView Grid.Column="1" ItemsSource="{Binding Guests}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding FirstName}" Width="100"/>
@@ -50,6 +50,7 @@
             </ListView.View>
             
         </ListView>
+        <!-- Исправил лист -->
 
         <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10">
             <Button Content="Бронировать" Width="150" Height="40" Background="LightCyan" Command="{Binding InsertGuest}" />

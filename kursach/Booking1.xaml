@@ -37,13 +37,31 @@
         </StackPanel>
 
         <Label Content="Выбрать гостя" Grid.Row="1" Grid.Column="1"/>
-        <ComboBox Height="30" Width="380" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Background="LightCyan" SelectedItem="{Binding SelectedGuest}" ItemsSource="{Binding Guest}" DisplayMemberPath="FirstName"/>
-
+        <ComboBox Height="30" Width="380" 
+                  Grid.Row="1" Grid.Column="1" 
+                  HorizontalAlignment="Center" 
+                  Background="LightCyan" 
+                  SelectedItem="{Binding SelectedGuest}" 
+                  ItemsSource="{Binding Guests}" 
+                  DisplayMemberPath="FirstName"/>
+        <!-- Исправил ComboBox -->
+        
+        
         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <Button Content="На главную" Width="100" Height="40" Background="LightCyan" Click="NavigateButton_Click"/>
         </StackPanel>
 
-        <Label Content="Выбрать номер" Grid.Row="2" Grid.Column="2"/>
-        <ComboBox Height="30" Width="380" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Background="LightCyan" SelectedItem="{Binding SelectedNumberModel}" ItemsSource="{Binding NumberModel}" DisplayMemberPath="Numberroom"/>
+        <Label Content="Выбрать номер" Grid.Row="2" Grid.Column="1"/>
+        <ComboBox Height="30" Width="380"
+                  Grid.Row="2" Grid.Column="1"
+                  HorizontalAlignment="Center"
+                  Background="LightCyan"
+                  SelectedItem="{Binding SelectedRoom}"
+                  ItemsSource="{Binding Number}"
+                  DisplayMemberPath="Numberroom"/>
+        <!-- Исправил ComboBox -->
+
+
+
     </Grid>
 </Window>

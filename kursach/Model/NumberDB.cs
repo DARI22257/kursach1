@@ -79,14 +79,20 @@ namespace kursach.Model
                         int price = 0;
 
                         if (!dr.IsDBNull(1))
-                            numberroom = dr.GetInt16("Numberroom");
+                            numberroom = dr.GetInt32("Numberroom"); /* Исправил. Было GetInt16, Ты используешь GetInt16, который соответствует short в C# (диапазон значений от -32 768 до 32 767)
+                                                            Если в базе данных поле Numberroom или Price содержит значение больше 32 767(например, номер +79112974323), произойдёт переполнение → overflow.
+                                                           */
                         if (!dr.IsDBNull(2))
                             type = dr.GetString("Type");
                         if (!dr.IsDBNull(3))
                             status = dr.GetString("Status");
                         if (!dr.IsDBNull(4))
-                            price = dr.GetInt16("Price");
+                            price = dr.GetInt32("Price"); /* Исправил. Было GetInt16, Ты используешь GetInt16, который соответствует short в C# (диапазон значений от -32 768 до 32 767)
+                                                            Если в базе данных поле Numberroom или Price содержит значение больше 32 767(например, цена 50000), произойдёт переполнение → overflow.
+                                                           */ 
 
+                                               
+                            
                         number.Add(new kursachModel.NumberModel
                         {
                             Id = id,

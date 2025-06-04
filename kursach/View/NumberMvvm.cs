@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace kursach.View
 {
@@ -48,7 +49,21 @@ namespace kursach.View
         public CommandMvvm InsertNumber { get; set; }
         public NumberMvvm()
         {
-            Number = new ObservableCollection<NumberModel>(NumberDB.GetDb().SelectAll().Select(s => (NumberModel)s));
+
+            try
+            {
+                Number = new ObservableCollection<NumberModel>(NumberDB.GetDb().SelectAll());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка загрузки номеров: " + ex.Message);
+                Number = new ObservableCollection<NumberModel>(); // чтобы избежать NullReferenceException
+            }
+            // Добавил проверку на перезаполнение, можешь убрать и оставить только нижнее🔽🔽🔽🔽 закоментированное (твое деяние, кстати не понимаю нахер) 
+
+
+            //Number = new ObservableCollection<NumberModel>(NumberDB.GetDb().SelectAll().Select(s => (NumberModel)s)); ✓ - твое деяние 
+
             InsertNumber = new CommandMvvm(() =>
             {
                 NumberDB.GetDb().Insert(newNumber); 
