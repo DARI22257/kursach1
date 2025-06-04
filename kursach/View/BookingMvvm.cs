@@ -41,6 +41,17 @@ namespace kursach.View
             }
         }
 
+        private Guest selectedGuest;
+        public Guest SelectedGuest
+        {
+            get => selectedGuest;
+            set
+            {
+                selectedGuest = value;
+                Signal();
+            }
+        }
+
 
         private ObservableCollection<Booking> booking = new();
 

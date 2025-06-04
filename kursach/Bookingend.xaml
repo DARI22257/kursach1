@@ -1,0 +1,32 @@
+﻿<Window x:Class="kursach.Bookingend"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:kursach"
+        mc:Ignorable="d"
+        Title="Bookingend" Height="450" Width="800">
+    <Grid>
+        <StackPanel Margin="20">
+            <TextBlock Text="Информация о бронировании" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Гость:" FontWeight="Bold"/>
+            <TextBlock x:Name="GuestNameText"/>
+
+            <TextBlock Text="Телефон:" FontWeight="Bold"/>
+            <TextBlock x:Name="PhoneText"/>
+
+            <TextBlock Text="Номер комнаты:" FontWeight="Bold"/>
+            <TextBlock x:Name="RoomNumberText"/>
+
+            <TextBlock Text="Тип комнаты:" FontWeight="Bold"/>
+            <TextBlock x:Name="RoomTypeText"/>
+
+            <TextBlock Text="Даты бронирования:" FontWeight="Bold"/>
+            <TextBlock x:Name="BookingDatesText"/>
+
+            <TextBlock Text="Статус:" FontWeight="Bold"/>
+            <TextBlock x:Name="StatusText"/>
+        </StackPanel>
+    </Grid>
+</Window>

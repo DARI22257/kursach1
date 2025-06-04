@@ -33,7 +33,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10">
-            <Button Content="Бронировать" Width="150" Height="40" Background="LightCyan" Command="{Binding InsertBooking}" />
+            <Button Content="Бронировать" Width="150" Height="40" Background="LightCyan" Click="BookButton_Click"  />
         </StackPanel>
 
         <Label Content="Выбрать гостя" Grid.Row="1" Grid.Column="1"/>

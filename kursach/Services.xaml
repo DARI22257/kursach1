@@ -46,5 +46,7 @@
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <Button Content="На главную" Width="100" Height="40" Background="LightCyan" Click="NavigateButton_Click"/>
         </StackPanel>
+
+        
     </Grid>
 </Window>

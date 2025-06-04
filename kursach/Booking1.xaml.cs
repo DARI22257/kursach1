@@ -30,6 +30,23 @@ namespace kursach
         {
             MainWindow mainWindow = new MainWindow(); mainWindow.Show();
         }
+        private void BookButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is BookingMvvm vm)
+            {
+                var selectedGuest = vm.SelectedGuest;
+                var selectedRoom = vm.SelectedRoom;
 
+                if (selectedGuest == null || selectedRoom == null)
+                {
+                    MessageBox.Show("Выберите гостя и номер перед бронированием.");
+                    return;
+                }
+
+                var bookingEndWindow = new Bookingend(vm.NewBooking, selectedGuest, selectedRoom);
+                bookingEndWindow.Show();
+                this.Close();
+            }
+        }
     }
 }

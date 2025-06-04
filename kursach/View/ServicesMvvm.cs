@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,9 +13,8 @@ namespace kursach.View
 {
     internal class ServicesMvvm : BaseVM
     {
-        private kursachModel.ServicesModel newServices = new();
-
-        public kursachModel.ServicesModel NewServices
+        private ServicesModel newServices = new();
+        public ServicesModel NewServices
         {
             get => newServices;
             set
@@ -23,8 +23,19 @@ namespace kursach.View
                 Signal();
             }
         }
-        private ObservableCollection<ServicesModel> services;
 
+        private ServicesModel selectedService;
+        public ServicesModel SelectedService
+        {
+            get => selectedService;
+            set
+            {
+                selectedService = value;
+                Signal();
+            }
+        }
+
+        private ObservableCollection<ServicesModel> services;
         public ObservableCollection<ServicesModel> Services
         {
             get => services;
@@ -36,19 +47,26 @@ namespace kursach.View
         }
 
         public CommandMvvm InsertServices { get; set; }
+
+
         public ServicesMvvm()
         {
-            Services = new ObservableCollection<ServicesModel>(ServicesDB.GetDb().SelectAll().Select(s => (ServicesModel)s));
+            Services = new ObservableCollection<ServicesModel>(ServicesDB.GetDb().SelectAll());
+
             InsertServices = new CommandMvvm(() =>
             {
-                ServicesDB.GetDb().Insert(newServices);
+                ServicesDB.GetDb().Insert(NewServices);
                 Services.Add(NewServices);
+                NewServices = new(); // очищаем форму
+                Signal(nameof(NewServices));
                 close?.Invoke();
             },
-                () =>
-                newServices.Price != 0 &&
-                !string.IsNullOrEmpty(newServices.Title));
+            () =>
+                NewServices.Price > 0 &&
+                !string.IsNullOrWhiteSpace(NewServices.Title));
         }
+
+
         Action close;
         internal void SetClose(Action close)
         {

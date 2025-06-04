@@ -13,5 +13,6 @@ namespace kursach
         public DateTime Datestart { get; set; }
         public DateTime Dateend { get; set; }
         public string Status { get; set; }
+        public int GuestId { get; set; }
     }
 }
