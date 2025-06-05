@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace kursach.View
 {
@@ -45,7 +46,7 @@ namespace kursach.View
                 Signal();
             }
         }
-
+        public CommandMvvm RemovesServices { get; set; }
         public CommandMvvm InsertServices { get; set; }
 
 
@@ -64,9 +65,25 @@ namespace kursach.View
             () =>
                 NewServices.Price > 0 &&
                 !string.IsNullOrWhiteSpace(NewServices.Title));
+
+            RemovesServices = new CommandMvvm(() =>
+            {
+
+                var clien = MessageBox.Show("Вы уверены что хотите удалить клиента ?", "Подтверждение", MessageBoxButton.YesNo);
+
+                if (clien == MessageBoxResult.Yes)
+                {
+                    employeesDB.GetDb().Remove(SelectedService);
+                }
+                SelectAll();
+
+            }, () => true);
         }
 
-
+        private void SelectAll()
+        {
+            Services = new ObservableCollection<Services>(ServicesDB.GetDb().SelectAll());
+        }
         Action close;
         internal void SetClose(Action close)
         {

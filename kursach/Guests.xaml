@@ -48,9 +48,13 @@
                     <GridViewColumn Header="Паспортные данные" DisplayMemberBinding="{Binding Passportdata}"/>
                 </GridView>
             </ListView.View>
-            
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить гостя" Command="{Binding RemovesGuest}"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
         </ListView>
-        <!-- Исправил лист -->
+
 
         <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10">
             <Button Content="Бронировать" Width="150" Height="40" Background="LightCyan" Command="{Binding InsertGuest}" />

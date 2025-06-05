@@ -42,7 +42,11 @@
                     <GridViewColumn Header="Номер телефона" DisplayMemberBinding="{Binding Phone}"/>
                 </GridView>
             </ListView.View>
-
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить сотрудника" Command="{Binding RemovesEmployees}"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
         </ListView>
 
         <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10">
