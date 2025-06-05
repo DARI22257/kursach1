@@ -48,11 +48,7 @@
                     <GridViewColumn Header="Паспортные данные" DisplayMemberBinding="{Binding Passportdata}"/>
                 </GridView>
             </ListView.View>
-            <ListView.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Удалить гостя" Command="{Binding RemovesGuest}"/>
-                </ContextMenu>
-            </ListView.ContextMenu>
+
         </ListView>
 
 

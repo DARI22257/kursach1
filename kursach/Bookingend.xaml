@@ -27,6 +27,8 @@
 
             <TextBlock Text="Статус:" FontWeight="Bold"/>
             <TextBlock x:Name="StatusText"/>
+
+            <Button Content="Сохранить бронь в базу" Click="SaveButton_Click" Margin="10" Padding="8"/>
         </StackPanel>
     </Grid>
 </Window>

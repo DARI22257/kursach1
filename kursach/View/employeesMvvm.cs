@@ -61,24 +61,9 @@ namespace kursach.View
                 !string.IsNullOrEmpty(newemployees.Jobtitle) &&
                 !string.IsNullOrEmpty(newemployees.Phone));
 
-            RemovesEmployees = new CommandMvvm(() =>
-            {
-
-                var clien = MessageBox.Show("Вы уверены что хотите удалить клиента ?", "Подтверждение", MessageBoxButton.YesNo);
-
-                if (clien == MessageBoxResult.Yes)
-                {
-                    employeesDB.GetDb().Remove(SelectedEmployees);
-                }
-                SelectAll();
-
-            }, () => true);
         }
 
-        private void SelectAll()
-        {
-            Employees = new ObservableCollection<employees>(employeesDB.GetDb().SelectAll());
-        }
+
 
 
 

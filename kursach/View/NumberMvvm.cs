@@ -59,7 +59,7 @@ namespace kursach.View
                 MessageBox.Show("Ошибка загрузки номеров: " + ex.Message);
                 Number = new ObservableCollection<NumberModel>(); // чтобы избежать NullReferenceException
             }
-            // Добавил проверку на перезаполнение, можешь убрать и оставить только нижнее🔽🔽🔽🔽 закоментированное (твое деяние, кстати не понимаю нахер) 
+            
 
 
             //Number = new ObservableCollection<NumberModel>(NumberDB.GetDb().SelectAll().Select(s => (NumberModel)s)); ✓ - твое деяние 

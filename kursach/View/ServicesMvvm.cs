@@ -66,24 +66,9 @@ namespace kursach.View
                 NewServices.Price > 0 &&
                 !string.IsNullOrWhiteSpace(NewServices.Title));
 
-            RemovesServices = new CommandMvvm(() =>
-            {
 
-                var clien = MessageBox.Show("Вы уверены что хотите удалить клиента ?", "Подтверждение", MessageBoxButton.YesNo);
-
-                if (clien == MessageBoxResult.Yes)
-                {
-                    employeesDB.GetDb().Remove(SelectedService);
-                }
-                SelectAll();
-
-            }, () => true);
         }
 
-        private void SelectAll()
-        {
-            Services = new ObservableCollection<Services>(ServicesDB.GetDb().SelectAll());
-        }
         Action close;
         internal void SetClose(Action close)
         {
