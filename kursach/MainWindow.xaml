@@ -56,5 +56,7 @@
         <Button Content="Добавить номер" Grid.Column="1"  Grid.Row="3" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click3"/>
         <Button Content="Добавить гостя" Grid.Column="1"  Grid.Row="4" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click4"/>
         <Button Content="Брони" Grid.Column="3" Grid.Row="2" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click5"/>
+        <Button Content="Учет сотрудников" Grid.Column="3" Grid.Row="3" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click6"/>
+        <Button Content="Учет услуг" Grid.Column="3" Grid.Row="4" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click7"/>
     </Grid>
 </Window>

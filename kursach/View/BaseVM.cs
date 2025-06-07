@@ -19,6 +19,7 @@ namespace kursach
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
             CommandManager.InvalidateRequerySuggested(); // Обновляет команды
         }
+
     }
 }
 

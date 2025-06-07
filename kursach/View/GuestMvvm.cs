@@ -1,6 +1,10 @@
 ﻿using kursach.Model;
+using kursachModel;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Security.Cryptography;
+using System.Windows;
 
 namespace kursach.View
 {
@@ -54,7 +58,7 @@ namespace kursach.View
 
         public CommandMvvm InsertGuest { get; set; }
         public CommandMvvm UpdateGuest { get; set; }
-
+        public CommandMvvm RemoveGuest { get; set; }
         public GuestMvvm()
         {
             try
@@ -94,6 +98,25 @@ namespace kursach.View
             () => SelectedGuest != null &&
                   !string.IsNullOrEmpty(NewGuest.FirstName) &&
                   !string.IsNullOrEmpty(NewGuest.Surname));
+
+            //RemoveGuest = new CommandMvvm(() =>
+            //{
+            //    // Проверяем, используется ли гость в бронированиях
+            //    bool isUsed = BookingDB.GetDb().SelectAll().Any(b => b.GuestId == SelectedGuest.Id);
+            //    if (isUsed)
+            //    {
+            //        MessageBox.Show("Невозможно удалить гостя: он привязан к бронированию.");
+            //        return;
+            //    }
+
+            //    if (GuestDB.GetDb().Remove(SelectedGuest))
+            //    {
+            //        Guest.Remove(SelectedGuest);
+            //        SelectedGuest = null;
+            //        NewGuest = new Guest();
+            //        Signal(nameof(NewGuest));
+            //    }
+            //}, () => SelectedGuest != null);
         }
 
         Action close;

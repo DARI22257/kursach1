@@ -34,22 +34,21 @@
               ItemsSource="{Binding Statuses}" 
               SelectedItem="{Binding SelectedStatus}"/>
         </StackPanel>
-            <!-- Таблица или ListView с бронированиями -->
-        <ListView ItemsSource="{Binding Bookings}" SelectedItem="{Binding SelectedBooking}" Grid.Row="1">
-            <!-- Пример шаблона -->
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Гость" DisplayMemberBinding="{Binding GuestFullName}" />
-                    <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding GuestPhone}" />
-                    <GridViewColumn Header="Номер" DisplayMemberBinding="{Binding RoomNumber}" />
-                    <GridViewColumn Header="Тип номера" DisplayMemberBinding="{Binding RoomType}" />
-                    <GridViewColumn Header="С датой" DisplayMemberBinding="{Binding Datestart}" />
-                    <GridViewColumn Header="По дату" DisplayMemberBinding="{Binding Dateend}" />
-                    <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status}" />
-                </GridView>
-                
-            </ListView.View>
-        </ListView>
+
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Bookings}"
+          SelectedItem="{Binding SelectedBooking}"
+          AutoGenerateColumns="False"
+          CanUserAddRows="False" Margin="0,10,0,0" >
+            <DataGrid.Columns >
+                <DataGridTextColumn Header="Гость" Binding="{Binding GuestFullName}" Width="150"/>
+                <DataGridTextColumn Header="Телефон" Binding="{Binding GuestPhone}" Width="150"/>
+                <DataGridTextColumn Header="Номер" Binding="{Binding RoomNumber}" Width="200"/>
+                <DataGridTextColumn Header="Тип номера" Binding="{Binding RoomType}" Width="200"/>
+                <DataGridTextColumn Header="С датой" Binding="{Binding Datestart}" Width="200"/>
+                <DataGridTextColumn Header="По дату" Binding="{Binding Dateend}" Width="200"/>
+                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="200"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <Button Content="Удалить бронь" HorizontalAlignment="Right"
         Command="{Binding DeleteBooking}"
         IsEnabled="{Binding SelectedBooking}"

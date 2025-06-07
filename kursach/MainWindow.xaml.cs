@@ -46,5 +46,13 @@ namespace kursach
         {
             BookingMemory bookingMemory = new BookingMemory(); bookingMemory.Show();
         }
+        private void NavigateButton_Click6(object sender, RoutedEventArgs e)
+        {
+            EmployeesMemory employeesMemory = new EmployeesMemory(); employeesMemory.Show();
+        }
+        private void NavigateButton_Click7(object sender, RoutedEventArgs e)
+        {
+            ServiceMemory serviceMemory = new ServiceMemory(); serviceMemory.Show();
+        }
     }
 }
