@@ -42,5 +42,9 @@ namespace kursach
         {
             Guests guests = new Guests(); guests.Show();
         }
+        private void NavigateButton_Click5(object sender, RoutedEventArgs e)
+        {
+            BookingMemory bookingMemory = new BookingMemory(); bookingMemory.Show();
+        }
     }
 }

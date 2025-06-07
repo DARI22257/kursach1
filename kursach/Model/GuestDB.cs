@@ -123,13 +123,17 @@ namespace kursach
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"update `Guest` set `Firstname`=@firstname, `Surname`=@surname where `id`, `Lastname`=@lastname,`Phone`=@phone,`Email`=@email,`Passportdata`=@passportdata = {edit.Id}");
-                mc.Parameters.Add(new MySqlParameter("Firstname", edit.FirstName));
-                mc.Parameters.Add(new MySqlParameter("Surname", edit.Surname));
-                mc.Parameters.Add(new MySqlParameter("Lastname", edit.Lastname));
-                mc.Parameters.Add(new MySqlParameter("Phone", edit.Phone));
-                mc.Parameters.Add(new MySqlParameter("Email", edit.Email));
-                mc.Parameters.Add(new MySqlParameter("Passportdata", edit.Passportdata));
+                var mc = connection.CreateCommand(
+                    "UPDATE `Guest` SET `Firstname`=@firstname, `Surname`=@surname, `Lastname`=@lastname, `Phone`=@phone, `Email`=@email, `Passportdata`=@passportdata WHERE `Id`=@id"
+                );
+
+                mc.Parameters.Add(new MySqlParameter("firstname", edit.FirstName));
+                mc.Parameters.Add(new MySqlParameter("surname", edit.Surname));
+                mc.Parameters.Add(new MySqlParameter("lastname", edit.Lastname));
+                mc.Parameters.Add(new MySqlParameter("phone", edit.Phone));
+                mc.Parameters.Add(new MySqlParameter("email", edit.Email));
+                mc.Parameters.Add(new MySqlParameter("passportdata", edit.Passportdata));
+                mc.Parameters.Add(new MySqlParameter("id", edit.Id)); 
 
                 try
                 {
@@ -141,9 +145,11 @@ namespace kursach
                     MessageBox.Show(ex.Message);
                 }
             }
+
             connection.CloseConnection();
             return result;
         }
+
 
 
         internal bool Remove(Guest remove)

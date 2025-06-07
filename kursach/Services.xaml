@@ -29,7 +29,7 @@
         </StackPanel>
 
 
-        <ListView Grid.Column="1" ItemsSource="{Binding Services}">
+        <ListView Grid.Column="1" ItemsSource="{Binding Services}" SelectedItem="{Binding SelectedService}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding Price}" Width="100"/>
@@ -45,8 +45,10 @@
 
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <Button Content="На главную" Width="100" Height="40" Background="LightCyan" Click="NavigateButton_Click"/>
+            
         </StackPanel>
 
-        
+        <Button Content="Удалить услугу" Grid.Row="1" Command="{Binding RemovesServices}"  Margin="10"  HorizontalAlignment="Right" Width="120"/>
+        <Button Content="Редактировать услугу" Command="{Binding UpdateServices}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="150" Height="40"  Margin="5" />
     </Grid>
 </Window>

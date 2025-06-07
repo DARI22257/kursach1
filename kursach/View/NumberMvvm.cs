@@ -1,20 +1,16 @@
 ﻿using kursach.Model;
 using kursachModel;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace kursach.View
 {
     internal class NumberMvvm : BaseVM
     {
-        private kursachModel.NumberModel newNumber = new();
+        private NumberModel newNumber = new();
 
-        public kursachModel.NumberModel NewNumber
+        public NumberModel NewNumber
         {
             get => newNumber;
             set
@@ -23,22 +19,32 @@ namespace kursach.View
                 Signal();
             }
         }
-        private NumberModel selectedNumberModel = new NumberModel();
+
+        private NumberModel selectedNumberModel = new();
         public NumberModel SelectedNumberModel
         {
             get => selectedNumberModel;
             set
             {
                 selectedNumberModel = value;
+                if (value != null)
+                {
+                    NewNumber = new NumberModel
+                    {
+                        Id = value.Id,
+                        Numberroom = value.Numberroom,
+                        Type = value.Type,
+                        Status = value.Status,
+                        Price = value.Price
+                    };
+                }
                 Signal();
             }
         }
 
-        private ObservableCollection<NumberModel> number ;
-
+        private ObservableCollection<NumberModel> number;
         public ObservableCollection<NumberModel> Number
         {
-
             get => number;
             set
             {
@@ -46,36 +52,85 @@ namespace kursach.View
                 Signal();
             }
         }
+
+        // Коллекции для ComboBox
+        public ObservableCollection<string> RoomTypes { get; set; } = new()
+        {
+            "Люкс", "Стандарт", "Президентский"
+        };
+
+        public ObservableCollection<string> StatusOptions { get; set; } = new()
+        {
+            "Свободен", "Занят"
+        };
+
         public CommandMvvm InsertNumber { get; set; }
+        public CommandMvvm UpdateNumber { get; set; }
+        public CommandMvvm RemoveNumber { get; set; }
+
         public NumberMvvm()
         {
-
             try
             {
                 Number = new ObservableCollection<NumberModel>(NumberDB.GetDb().SelectAll());
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show("Ошибка загрузки номеров: " + ex.Message);
-                Number = new ObservableCollection<NumberModel>(); // чтобы избежать NullReferenceException
+                Number = new ObservableCollection<NumberModel>();
             }
-            
-
-
-            //Number = new ObservableCollection<NumberModel>(NumberDB.GetDb().SelectAll().Select(s => (NumberModel)s)); ✓ - твое деяние 
 
             InsertNumber = new CommandMvvm(() =>
             {
-                NumberDB.GetDb().Insert(newNumber); 
-                Number.Add(NewNumber); 
-                close?.Invoke();
+                if (NumberDB.GetDb().Insert(NewNumber))
+                {
+                    Number.Add(NewNumber);
+                    NewNumber = new NumberModel();
+                    Signal(nameof(NewNumber));
+                    close?.Invoke();
+                }
             },
-                () =>
-                newNumber.Numberroom != 0 &&
-                !string.IsNullOrEmpty(newNumber.Type) &&
-                !string.IsNullOrEmpty(newNumber.Status) &&
-                newNumber.Price != 0);
+            () =>
+                NewNumber.Numberroom > 0 &&
+                !string.IsNullOrWhiteSpace(NewNumber.Type) &&
+                !string.IsNullOrWhiteSpace(NewNumber.Status) &&
+                NewNumber.Price > 0);
+
+            UpdateNumber = new CommandMvvm(() =>
+            {
+                if (NumberDB.GetDb().Update(NewNumber))
+                {
+                    var idx = Number.IndexOf(SelectedNumberModel);
+                    Number[idx] = NewNumber;
+                    SelectedNumberModel = null;
+                    NewNumber = new NumberModel();
+                    Signal(nameof(NewNumber));
+                }
+            },
+            () => SelectedNumberModel != null &&
+                  NewNumber.Numberroom > 0 &&
+                  !string.IsNullOrWhiteSpace(NewNumber.Type) &&
+                  !string.IsNullOrWhiteSpace(NewNumber.Status) &&
+                  NewNumber.Price > 0);
+
+            RemoveNumber = new CommandMvvm(() =>
+            {
+                bool isUsed = BookingDB.GetDb().SelectAll().Any(b => b.RoomId == SelectedNumberModel.Id);
+                if (isUsed)
+                {
+                    MessageBox.Show("Невозможно удалить номер: он используется в бронях.");
+                    return;
+                }
+                if (NumberDB.GetDb().Remove(SelectedNumberModel))
+                {
+                    Number.Remove(SelectedNumberModel);
+                    SelectedNumberModel = null;
+                    NewNumber = new NumberModel();
+                    Signal(nameof(NewNumber));
+                }
+            },
+            () => SelectedNumberModel != null);
         }
+
         Action close;
         internal void SetClose(Action close)
         {

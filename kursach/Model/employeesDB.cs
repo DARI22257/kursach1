@@ -1,10 +1,6 @@
 ﻿using MySqlConnector;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace kursach.Model
@@ -26,7 +22,7 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                MySqlCommand cmd = connection.CreateCommand("insert into `employees` Values (0, @name, @Jobtitle,@Schedule, @Phone);select LAST_INSERT_ID();");
+                MySqlCommand cmd = connection.CreateCommand("INSERT INTO `employees` VALUES (0, @name, @Jobtitle, @Schedule, @Phone); SELECT LAST_INSERT_ID();");
 
                 cmd.Parameters.Add(new MySqlParameter("name", employees.name));
                 cmd.Parameters.Add(new MySqlParameter("Jobtitle", employees.Jobtitle));
@@ -35,7 +31,6 @@ namespace kursach.Model
 
                 try
                 {
-
                     int id = (int)(ulong)cmd.ExecuteScalar();
                     if (id > 0)
                     {
@@ -52,6 +47,7 @@ namespace kursach.Model
                     MessageBox.Show(ex.Message);
                 }
             }
+
             connection.CloseConnection();
             return result;
         }
@@ -64,26 +60,18 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                var command = connection.CreateCommand("select `id`, `name`, `Jobtitle`,  `Schedule`,`Phone` from `employees` ");
+                var command = connection.CreateCommand("SELECT `ID`, `name`, `Jobtitle`, `Schedule`, `Phone` FROM `employees`");
                 try
                 {
                     MySqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
-                        int id = dr.GetInt32(0);
-                        string name = string.Empty;
-                        string jobtitle = string.Empty;
-                        DateTime schedule = DateTime.Now;
-                        string phone = string.Empty;
+                        int id = dr.GetInt32("ID");
+                        string name = dr.GetString("name");
+                        string jobtitle = dr.GetString("Jobtitle");
+                        DateTime schedule = dr.GetDateTime("Schedule");
+                        string phone = dr.GetString("Phone");
 
-                        if (!dr.IsDBNull(1))
-                            name = dr.GetString("name");
-                        if (!dr.IsDBNull(1))
-                            jobtitle = dr.GetString("Jobtitle");
-                        if (!dr.IsDBNull(1))
-                            schedule = dr.GetDateTime("Schedule");
-                        if (!dr.IsDBNull(1))
-                            phone = dr.GetString("Phone");
                         employees.Add(new employees
                         {
                             Id = id,
@@ -99,6 +87,7 @@ namespace kursach.Model
                     MessageBox.Show(ex.Message);
                 }
             }
+
             connection.CloseConnection();
             return employees;
         }
@@ -111,11 +100,15 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"update `employees` set `name`=@name, `jobtitle`=@Jobtitle,`schedule`=@Schedule, `phone`=@Phone,  where `id` = {edit.Id}");
+                var mc = connection.CreateCommand(
+                    "UPDATE `employees` SET `name`=@name, `Jobtitle`=@jobtitle, `Schedule`=@Schedule, `Phone`=@phone WHERE `ID`=@id"
+                );
+
                 mc.Parameters.Add(new MySqlParameter("name", edit.name));
-                mc.Parameters.Add(new MySqlParameter("Jobtitle", edit.Jobtitle));
+                mc.Parameters.Add(new MySqlParameter("jobtitle", edit.Jobtitle));
                 mc.Parameters.Add(new MySqlParameter("Schedule", edit.Schedule));
-                mc.Parameters.Add(new MySqlParameter("Phone", edit.Phone));
+                mc.Parameters.Add(new MySqlParameter("phone", edit.Phone));
+                mc.Parameters.Add(new MySqlParameter("id", edit.Id));
 
                 try
                 {
@@ -127,10 +120,10 @@ namespace kursach.Model
                     MessageBox.Show(ex.Message);
                 }
             }
+
             connection.CloseConnection();
             return result;
         }
-
 
         internal bool Remove(employees remove)
         {
@@ -140,7 +133,9 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"delete from `employees` where `id`,`name`,`Jobtitle`,`Schedule`,`Phone` = {remove.Id}");
+                var mc = connection.CreateCommand("DELETE FROM `employees` WHERE `ID` = @id");
+                mc.Parameters.Add(new MySqlParameter("id", remove.Id));
+
                 try
                 {
                     mc.ExecuteNonQuery();
@@ -151,6 +146,7 @@ namespace kursach.Model
                     MessageBox.Show(ex.Message);
                 }
             }
+
             connection.CloseConnection();
             return result;
         }

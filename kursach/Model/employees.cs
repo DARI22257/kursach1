@@ -11,7 +11,7 @@ namespace kursach
         public int Id { get; set; }
         public string name { get; set; }
         public string Jobtitle { get; set; }
-        public DateTime Schedule {  get; set; }
+        public DateTime Schedule {  get; set; } = DateTime.Now;
         public string Phone { get; set; }
 
     }

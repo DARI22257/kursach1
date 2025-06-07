@@ -1,12 +1,6 @@
 ﻿using kursach.Model;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace kursach.View
@@ -14,7 +8,6 @@ namespace kursach.View
     public class employeesMvvm : BaseVM
     {
         private employees newemployees = new();
-
         public employees Newemployees
         {
             get => newemployees;
@@ -24,6 +17,7 @@ namespace kursach.View
                 Signal();
             }
         }
+
         private employees selectedEmployees;
         public employees SelectedEmployees
         {
@@ -31,11 +25,23 @@ namespace kursach.View
             set
             {
                 selectedEmployees = value;
+                if (value != null)
+                {
+                    // Копируем выбранного в форму редактирования
+                    Newemployees = new employees
+                    {
+                        Id = value.Id,
+                        name = value.name,
+                        Jobtitle = value.Jobtitle,
+                        Schedule = value.Schedule,
+                        Phone = value.Phone
+                    };
+                }
                 Signal();
             }
         }
-        private ObservableCollection<employees> employees;
 
+        private ObservableCollection<employees> employees;
         public ObservableCollection<employees> Employees
         {
             get => employees;
@@ -45,29 +51,55 @@ namespace kursach.View
                 Signal();
             }
         }
-        public CommandMvvm RemovesEmployees { get; set; }
+
         public CommandMvvm InsertEmployees { get; set; }
+        public CommandMvvm UpdateEmployees { get; set; }
+        public CommandMvvm RemoveEmployees { get; set; }
+
         public employeesMvvm()
         {
             Employees = new ObservableCollection<employees>(employeesDB.GetDb().SelectAll());
+
             InsertEmployees = new CommandMvvm(() =>
             {
-                employeesDB.GetDb().Insert(newemployees);
+                employeesDB.GetDb().Insert(Newemployees);
                 Employees.Add(Newemployees);
+                Newemployees = new(); // очистить форму
+                Signal(nameof(Newemployees));
                 close?.Invoke();
             },
-                () =>
+            () =>
                 !string.IsNullOrEmpty(newemployees.name) &&
                 !string.IsNullOrEmpty(newemployees.Jobtitle) &&
                 !string.IsNullOrEmpty(newemployees.Phone));
 
+            UpdateEmployees = new CommandMvvm(() =>
+            {
+                employeesDB.GetDb().Update(Newemployees);
+
+                // обновить в списке
+                var updated = Employees.IndexOf(SelectedEmployees);
+                Employees[updated] = newemployees;
+                SelectedEmployees = null;
+                Newemployees = new();
+                Signal(nameof(Newemployees));
+            },
+            () => SelectedEmployees != null &&
+                  !string.IsNullOrEmpty(Newemployees.name) &&
+                  !string.IsNullOrEmpty(Newemployees.Jobtitle) &&
+                  !string.IsNullOrEmpty(Newemployees.Phone));
+
+            RemoveEmployees = new CommandMvvm(() =>
+            {
+                employeesDB.GetDb().Remove(SelectedEmployees);
+                Employees.Remove(SelectedEmployees);
+                SelectedEmployees = null;
+                Newemployees = new();
+            },
+            () => SelectedEmployees != null);
         }
 
-
-
-
-
-            Action close;
+        Action close;
         internal void SetClose(Action close)
         {
             this.close = close;

@@ -33,7 +33,7 @@
         </StackPanel>
 
 
-        <ListView Grid.Column="1" ItemsSource="{Binding Employees}" >
+        <ListView Grid.Column="1" ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployees}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding name}" Width="100"/>
@@ -52,6 +52,9 @@
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <Button Content="На главную" Width="100" Height="40" Background="LightCyan" Click="NavigateButton_Click"/>
         </StackPanel>
+
+        <Button Content="Удалить сотрудника" Grid.Row="1" Command="{Binding RemoveEmployees}" Margin="10" HorizontalAlignment="Right" Height="50" Width="140"/>
+        <Button Content="Редактировать сотрудника" Grid.Column="1" Grid.Row="1" Command="{Binding UpdateEmployees}"  HorizontalAlignment="Left"  Margin="5" Height="50" Width="160"/>
     </Grid>
 </Window>   
 

@@ -1,52 +1,23 @@
-﻿using kursach.Model;
-using kursach.View;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using kursach.View;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace kursach
 {
-    /// <summary>
-    /// Логика взаимодействия для Booking1.xaml
-    /// </summary>
     public partial class Booking1 : Window
     {
         public Booking1()
         {
             InitializeComponent();
-            DataContext = new BookingMvvm();
+
+            var vm = new BookingMvvm();
+            DataContext = vm;
+            vm.SetClose(this.Close); // передаём метод закрытия окна
         }
+
         private void NavigateButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow(); mainWindow.Show();
-        }
-        private void BookButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (DataContext is BookingMvvm vm)
-            {
-                var selectedGuest = vm.SelectedGuest;
-                var selectedRoom = vm.SelectedRoom;
-
-                if (selectedGuest == null || selectedRoom == null)
-                {
-                    MessageBox.Show("Выберите гостя и номер перед бронированием.");
-                    return;
-                }
-
-                var bookingEndWindow = new Bookingend(vm.NewBooking, selectedGuest, selectedRoom);
-                bookingEndWindow.Show();
-                this.Close();
-            }
+            new MainWindow().Show();
+            this.Close();
         }
     }
 }

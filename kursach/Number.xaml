@@ -21,19 +21,33 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0" Margin="10" DataContext="{Binding NewNumber}" >
-            <Label Content="Номер комнаты"/>
-            <TextBox Text="{Binding Numberroom}"/>
-            <Label Content="Тип"/>
-            <TextBox Text="{Binding Type}"/>
-            <Label Content="Статус"/>
-            <TextBox Text="{Binding Status}"/>
-            <Label Content="Цена"/>
-            <TextBox Text="{Binding Price}"/>
+        <StackPanel Orientation="Vertical" Margin="10">
+            <TextBlock Text="Номер комнаты" />
+            <TextBox Text="{Binding NewNumber.Numberroom, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock Text="Тип" Margin="0,10,0,0"/>
+            <ComboBox ItemsSource="{Binding RoomTypes}"
+              SelectedItem="{Binding NewNumber.Type, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock Text="Статус" Margin="0,10,0,0"/>
+            <ComboBox ItemsSource="{Binding StatusOptions}"
+              SelectedItem="{Binding NewNumber.Status, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock Text="Цена" Margin="0,10,0,0"/>
+            <TextBox Text="{Binding NewNumber.Price, UpdateSourceTrigger=PropertyChanged}" />
+
+            <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                <Button Content="Зарегистрировать номер"
+                Command="{Binding InsertNumber}" />
+                <Button Content="Редактировать номер"
+                Command="{Binding UpdateNumber}" Margin="10,0,0,0"/>
+                <Button Content="Удалить номер"
+                Command="{Binding RemoveNumber}" Margin="10,0,0,0"/>
+            </StackPanel>
         </StackPanel>
 
 
-        <ListView Grid.Column="1" ItemsSource="{Binding Number}">
+        <ListView Grid.Column="1" ItemsSource="{Binding Number}" SelectedItem="{Binding SelectedNumberModel}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Номер комнаты" DisplayMemberBinding="{Binding Numberroom}" Width="100"/>
@@ -45,12 +59,10 @@
  
         </ListView>
 
-        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10">
-            <Button Content="Зарегестрировать номер" Width="150" Height="40" Background="LightCyan" Command="{Binding InsertNumber}" />
-        </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <Button Content="На главную" Width="100" Height="40" Background="LightCyan" Click="NavigateButton_Click"/>
         </StackPanel>
+
     </Grid>
 </Window>

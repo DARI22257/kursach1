@@ -1,4 +1,5 @@
-﻿using MySqlConnector;
+﻿using kursachModel;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -96,7 +97,7 @@ namespace kursach.Model
             return services;
         }
 
-        internal bool Update(kursachModel.ServicesModel edit)
+        internal bool Update(ServicesModel edit)
         {
             bool result = false;
             if (connection == null)
@@ -104,9 +105,13 @@ namespace kursach.Model
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"update `Services` set `Title`=@title,`price`=@price, = {edit.Id}");
-                mc.Parameters.Add(new MySqlParameter("Title", edit.Title));
+                var mc = connection.CreateCommand(
+                    "UPDATE `Services` SET `Title`=@title, `Price`=@price WHERE `ID`=@id"
+                );
+
+                mc.Parameters.Add(new MySqlParameter("title", edit.Title));
                 mc.Parameters.Add(new MySqlParameter("price", edit.Price));
+                mc.Parameters.Add(new MySqlParameter("id", edit.Id)); 
 
                 try
                 {
@@ -118,6 +123,7 @@ namespace kursach.Model
                     MessageBox.Show(ex.Message);
                 }
             }
+
             connection.CloseConnection();
             return result;
         }

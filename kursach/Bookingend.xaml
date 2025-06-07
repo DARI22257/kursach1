@@ -28,7 +28,7 @@
             <TextBlock Text="Статус:" FontWeight="Bold"/>
             <TextBlock x:Name="StatusText"/>
 
-            <Button Content="Сохранить бронь в базу" Click="SaveButton_Click" Margin="10" Padding="8"/>
+            <Button Content="Подтвердить бронь" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"  Width="200" Height="50" Click="ConfirmBooking_Click"/>
         </StackPanel>
     </Grid>
 </Window>

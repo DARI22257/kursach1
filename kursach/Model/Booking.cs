@@ -9,9 +9,9 @@ namespace kursach
      public class Booking
     {
         public int Id { get; set; }
-        public int Numberroom { get; set; }
-        public DateTime Datestart { get; set; }
-        public DateTime Dateend { get; set; }
+        public int RoomId { get; set; }
+        public System.DateTime Datestart { get; set; } = DateTime.Now;
+        public System.DateTime Dateend { get; set; } = DateTime.Now;
         public string Status { get; set; }
         public int GuestId { get; set; }
     }

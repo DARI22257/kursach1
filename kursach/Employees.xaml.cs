@@ -22,6 +22,7 @@ namespace kursach
         public Employees()
         {
             InitializeComponent();
+            DataContext = new kursach.View.employeesMvvm();
         }
         private void NavigateButton_Click(object sender, RoutedEventArgs e)
         {

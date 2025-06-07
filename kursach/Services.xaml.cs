@@ -22,6 +22,7 @@ namespace kursach
         public Services()
         {
             InitializeComponent();
+            DataContext = new kursach.View.ServicesMvvm();
         }
         private void NavigateButton_Click(object sender, RoutedEventArgs e)
         {

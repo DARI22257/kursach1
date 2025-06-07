@@ -37,7 +37,7 @@
         </StackPanel>
 
 
-        <ListView Grid.Column="1" ItemsSource="{Binding Guests}">
+        <ListView Grid.Column="1" ItemsSource="{Binding Guests}" SelectedItem="{Binding SelectedGuest}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding FirstName}" Width="100"/>
@@ -59,5 +59,8 @@
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <Button Content="На главную" Width="100" Height="40" Background="LightCyan" Click="NavigateButton_Click"/>
         </StackPanel>
+
+        <Button Content="Удалить гостя" Grid.Row="1" Grid.Column="1" Command="{Binding RemovesGuest}"  Margin="10"  HorizontalAlignment="Left" Width="120"/>
+        <Button Content="Редактировать гостя" Command="{Binding UpdateGuest}" Grid.Column="1" Grid.Row="1" Margin="5" Width="120"/>
     </Grid>
 </Window>
