@@ -99,24 +99,24 @@ namespace kursach.View
                   !string.IsNullOrEmpty(NewGuest.FirstName) &&
                   !string.IsNullOrEmpty(NewGuest.Surname));
 
-            //RemoveGuest = new CommandMvvm(() =>
-            //{
-            //    // Проверяем, используется ли гость в бронированиях
-            //    bool isUsed = BookingDB.GetDb().SelectAll().Any(b => b.GuestId == SelectedGuest.Id);
-            //    if (isUsed)
-            //    {
-            //        MessageBox.Show("Невозможно удалить гостя: он привязан к бронированию.");
-            //        return;
-            //    }
+            RemoveGuest = new CommandMvvm(() =>
+            {
+                // Проверяем, используется ли гость в бронированиях
+                bool isUsed = BookingDB.GetDb().SelectAll().Any(b => b.GuestId == SelectedGuest.Id);
+                if (isUsed)
+                {
+                    MessageBox.Show("Невозможно удалить гостя: он привязан к бронированию.");
+                    return;
+                }
 
-            //    if (GuestDB.GetDb().Remove(SelectedGuest))
-            //    {
-            //        Guest.Remove(SelectedGuest);
-            //        SelectedGuest = null;
-            //        NewGuest = new Guest();
-            //        Signal(nameof(NewGuest));
-            //    }
-            //}, () => SelectedGuest != null);
+                if (GuestDB.GetDb().Remove(SelectedGuest))
+                {
+                    Guests.Remove(SelectedGuest);
+                    SelectedGuest = null;
+                    NewGuest = new Guest();
+                    Signal(nameof(NewGuest));
+                }
+            }, () => SelectedGuest != null);
         }
 
         Action close;

@@ -60,6 +60,9 @@ namespace kursach
 
             if (success)
             {
+                room.Status = "Занят";
+                NumberDB.GetDb().Update(room);
+
                 MessageBox.Show("Бронь подтверждена.");
                 BookingMemory memoryWindow = new BookingMemory();
                 memoryWindow.Show();
