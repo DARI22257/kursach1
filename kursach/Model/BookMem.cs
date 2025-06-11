@@ -16,5 +16,6 @@ namespace kursach.Model
         public string Datestart { get; set; }
         public string Dateend { get; set; }
         public string Status { get; set; }
+        public int TotalPrice { get; set; }
     }
 }

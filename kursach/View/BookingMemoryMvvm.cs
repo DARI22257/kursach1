@@ -93,6 +93,17 @@ namespace kursach.View
 
                 if (booking != null && BookingDB.GetDb().Remove(booking))
                 {
+                    // 1. Найти номер по RoomId
+                    var room = NumberDB.GetDb().SelectAll().FirstOrDefault(r => r.Id == booking.RoomId);
+
+                    // 2. Обновить статус
+                    if (room != null)
+                    {
+                        room.Status = "Свободен";
+                        NumberDB.GetDb().Update(room);
+                    }
+
+                    // 3. Удалить из отображаемого списка
                     allBookings.Remove(SelectedBooking);
                     Bookings.Remove(SelectedBooking);
                     SelectedBooking = null;
@@ -117,14 +128,15 @@ namespace kursach.View
                 join room in rooms on booking.RoomId equals room.Id
                 select new BookMem
                 {
-                    BookingId = booking.Id,  // ← ВАЖНО: передаём ID из базы
+                    BookingId = booking.Id,
                     GuestFullName = $"{guest.FirstName} {guest.Surname} {guest.Lastname}",
                     GuestPhone = guest.Phone,
                     RoomNumber = room.Numberroom,
                     RoomType = room.Type,
                     Datestart = booking.Datestart.ToShortDateString(),
                     Dateend = booking.Dateend.ToShortDateString(),
-                    Status = booking.Status
+                    Status = booking.Status,
+                    TotalPrice = room.Price * Math.Max(1, (booking.Dateend - booking.Datestart).Days)
                 });
 
             Bookings = new ObservableCollection<BookMem>(allBookings);

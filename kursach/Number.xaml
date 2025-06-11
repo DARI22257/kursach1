@@ -7,11 +7,35 @@
         xmlns:mvvm="clr-namespace:kursach.View" 
         DataContext="{DynamicResource vm}"
         mc:Ignorable="d"
-        Title="Number" Height="450" Width="800" Background="#88d3c6">
+        Title="Number" Height="450" Width="800" >
     <Window.Resources>
         <mvvm:NumberMvvm x:Key="vm"/>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#90CAF9"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderBrush" Value="#42A5F5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+        BorderBrush="{TemplateBinding BorderBrush}"
+        BorderThickness="{TemplateBinding BorderThickness}"
+        CornerRadius="8"
+        Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
-    <Grid>
+    <Grid Background="#A0E0D5" Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="2*" />
@@ -36,16 +60,17 @@
             <TextBlock Text="Цена" Margin="0,10,0,0"/>
             <TextBox Text="{Binding NewNumber.Price, UpdateSourceTrigger=PropertyChanged}" />
 
-            <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                <Button Content="Зарегистрировать номер"
-                Command="{Binding InsertNumber}" />
-                <Button Content="Редактировать номер"
-                Command="{Binding UpdateNumber}" Margin="10,0,0,0"/>
-                <Button Content="Удалить номер"
-                Command="{Binding RemoveNumber}" Margin="10,0,0,0"/>
-            </StackPanel>
+
         </StackPanel>
 
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,0" Grid.Row="1">
+            <Button Content="Зарегистрировать "
+                Command="{Binding InsertNumber}" />
+            <Button Content="Редактировать "
+                Command="{Binding UpdateNumber}" Margin="10,0,0,0"/>
+            <Button Content="Удалить "
+                Command="{Binding RemoveNumber}" Margin="10,0,0,0"/>
+        </StackPanel>
 
         <ListView Grid.Column="1" ItemsSource="{Binding Number}" SelectedItem="{Binding SelectedNumberModel}">
             <ListView.View>
@@ -61,7 +86,7 @@
 
 
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button Content="На главную" Width="100" Height="40" Background="LightCyan" Click="NavigateButton_Click"/>
+            <Button Content="На главную" Width="100"  Background="LightCyan" Click="NavigateButton_Click"/>
         </StackPanel>
 
     </Grid>

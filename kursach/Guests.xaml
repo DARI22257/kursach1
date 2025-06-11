@@ -7,18 +7,43 @@
         xmlns:mvvm="clr-namespace:kursach.View" 
         DataContext="{DynamicResource vm}"
         mc:Ignorable="d"
-        Title="Guests" Height="450" Width="800" Background="#88d3c6">
+        Title="Guests" Height="450" Width="1000" >
     <Window.Resources>
         <mvvm:GuestMvvm x:Key="vm"/>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#90CAF9"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderBrush" Value="#42A5F5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="8"
+                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
-    <Grid>
+    <Grid Background="#A0E0D5" Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="5*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0" Margin="10" DataContext="{Binding NewGuest}" >
@@ -34,8 +59,14 @@
             <TextBox Text="{Binding Email}"/>
             <Label Content="Паспортные данные"/>
             <TextBox Text="{Binding Passportdata}"/>
-        </StackPanel>
 
+
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,15,0,0" Grid.Row="1" Grid.ColumnSpan="2">
+            <Button Content="Зарегистрировать " Command="{Binding InsertGuest}" />
+            <Button Content="Удалить " Command="{Binding RemoveGuest}" Margin="10,0,0,0"/>
+            <Button Content="Редактировать " Command="{Binding UpdateGuest}" Margin="10,0,0,0"/>
+        </StackPanel>
 
         <ListView Grid.Column="1" ItemsSource="{Binding Guests}" SelectedItem="{Binding SelectedGuest}">
             <ListView.View>
@@ -52,15 +83,9 @@
         </ListView>
 
 
-        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10">
-            <Button Content="Бронировать" Width="150" Height="40" Background="LightCyan" Command="{Binding InsertGuest}" />
-        </StackPanel>
-
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button Content="На главную" Width="100" Height="40" Background="LightCyan" Click="NavigateButton_Click"/>
+            <Button Content="На главную" Width="100"  Background="LightCyan" Click="NavigateButton_Click"/>
         </StackPanel>
 
-        <Button Content="Удалить гостя" Grid.Row="1" Grid.Column="1" Command="{Binding RemoveGuest}"  Margin="10"  HorizontalAlignment="Left" Width="120"/>
-        <Button Content="Редактировать гостя" Command="{Binding UpdateGuest}" Grid.Column="1" Grid.Row="1" Margin="5" Width="120"/>
     </Grid>
 </Window>

@@ -6,12 +6,36 @@
 
     <Window.Resources>
         <vm:BookingMemoryMvvm x:Key="vm"/>
-    </Window.Resources>
+
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="#90CAF9"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Padding" Value="10,5"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="BorderBrush" Value="#42A5F5"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="8"
+                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Window.Resources>
 
     <Window.DataContext>
         <StaticResource ResourceKey="vm"/>
     </Window.DataContext>
-    <Grid Margin="10">
+    <Grid Background="#A0E0D5" Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="10*"/>
@@ -35,18 +59,19 @@
               SelectedItem="{Binding SelectedStatus}"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Bookings}"
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Bookings}" 
           SelectedItem="{Binding SelectedBooking}"
           AutoGenerateColumns="False"
           CanUserAddRows="False" Margin="0,10,0,0" >
             <DataGrid.Columns >
-                <DataGridTextColumn Header="Гость" Binding="{Binding GuestFullName}" Width="150"/>
-                <DataGridTextColumn Header="Телефон" Binding="{Binding GuestPhone}" Width="150"/>
-                <DataGridTextColumn Header="Номер" Binding="{Binding RoomNumber}" Width="200"/>
-                <DataGridTextColumn Header="Тип номера" Binding="{Binding RoomType}" Width="200"/>
-                <DataGridTextColumn Header="С датой" Binding="{Binding Datestart}" Width="200"/>
-                <DataGridTextColumn Header="По дату" Binding="{Binding Dateend}" Width="200"/>
-                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="200"/>
+                <DataGridTextColumn Header="Гость" Binding="{Binding GuestFullName}" Width="200"/>
+                <DataGridTextColumn Header="Телефон" Binding="{Binding GuestPhone}" Width="100"/>
+                <DataGridTextColumn Header="Номер" Binding="{Binding RoomNumber}" Width="60"/>
+                <DataGridTextColumn Header="Тип номера" Binding="{Binding RoomType}" Width="100"/>
+                <DataGridTextColumn Header="Дата заезда" Binding="{Binding Datestart}" Width="100"/>
+                <DataGridTextColumn Header="Дата выезда" Binding="{Binding Dateend}" Width="100"/>
+                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="100"/>
+                <DataGridTextColumn Header="Стоимость" Binding="{Binding TotalPrice}" />
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Удалить бронь" HorizontalAlignment="Right"

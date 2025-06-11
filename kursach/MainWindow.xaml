@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:kursach"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Background="#43b7a2">
+        Title="MainWindow" Height="450" Width="800" >
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Background" Value="#90CAF9"/>
@@ -31,7 +31,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid Background="#A0E0D5" Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -42,21 +42,21 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Text="Pushkin Residence" FontSize="24" Grid.ColumnSpan="5" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
 
-        <Button Content="Бронировать" Grid.Column="3"  Grid.Row="1" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click"/>
-        <Button Content="Добавить сотрудника" Grid.Column="1"  Grid.Row="1" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click1"/>
-        <Button Content="Добавить услугу" Grid.Column="1"  Grid.Row="2" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click2"/>
-        <Button Content="Добавить номер" Grid.Column="1"  Grid.Row="3" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click3"/>
-        <Button Content="Добавить гостя" Grid.Column="1"  Grid.Row="4" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click4"/>
-        <Button Content="Брони" Grid.Column="3" Grid.Row="2" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click5"/>
-        <Button Content="Учет сотрудников" Grid.Column="3" Grid.Row="3" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click6"/>
-        <Button Content="Учет услуг" Grid.Column="3" Grid.Row="4" Width="150" Height="30" Background="LightCyan" Click="NavigateButton_Click7"/>
+        <Button Content="Бронировать" Grid.Column="3"  Grid.Row="1" Width="170" Height="30" Background="LightCyan" Click="NavigateButton_Click" Margin="0, 0, 0, 0"/>
+        <Button Content="Добавить сотрудника" Grid.Column="1"  Grid.Row="1" Width="170" Height="30" Background="LightCyan" Click="NavigateButton_Click1"/>
+        <Button Content="Добавить услугу" Grid.Column="1"  Grid.Row="2" Width="170" Height="30" Background="LightCyan" Click="NavigateButton_Click2"/>
+        <Button Content="Добавить номер" Grid.Column="1"  Grid.Row="3" Width="170" Height="30" Background="LightCyan" Click="NavigateButton_Click3"/>
+        <Button Content="Добавить гостя" Grid.Column="1"  Grid.Row="4" Width="170" Height="30" Background="LightCyan" Click="NavigateButton_Click4"/>
+        <Button Content="Брони" Grid.Column="3" Grid.Row="2" Width="170" Height="30" Background="LightCyan" Click="NavigateButton_Click5"/>
+        <Button Content="Учет сотрудников" Grid.Column="3" Grid.Row="3" Width="170" Height="30" Background="LightCyan" Click="NavigateButton_Click6"/>
+        <Button Content="Учет услуг" Grid.Column="3" Grid.Row="4" Width="170" Height="30" Background="LightCyan" Click="NavigateButton_Click7"/>
     </Grid>
 </Window>

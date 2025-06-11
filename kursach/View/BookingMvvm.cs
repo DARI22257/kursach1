@@ -43,6 +43,10 @@ namespace kursach.View
 
                 if (BookingDB.GetDb().Insert(NewBooking))
                 {
+                    // Обновить статус номера
+                    SelectedRoom.Status = "Занят";
+                    NumberDB.GetDb().Update(SelectedRoom);
+
                     Booking.Add(NewBooking);
                     NewBooking = new Booking
                     {
@@ -51,7 +55,7 @@ namespace kursach.View
                         Dateend = DateTime.Today
                     };
                     Signal(nameof(NewBooking));
-                    close?.Invoke(); // Закрыть окно
+                    close?.Invoke();
                 }
                 else
                 {
